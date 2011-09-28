@@ -11,6 +11,7 @@
 #include <memory>
 #include <string>
 #include <vector>
+#include <set>
 #include <boost/intrusive_ptr.hpp>
 #include <boost/foreach.hpp>
 #include "Object.h"
@@ -27,6 +28,16 @@ struct Point {
     
     friend std::ostream &operator<<(std::ostream &stream, Point p) {
         stream << "(" << p.x << ", " << p.y << ", " << p.z << ")";
+    }
+    
+    bool operator<(const Point& p) const {
+        if (x != p.x)
+            return x < p.x;
+        if (y != p.y)
+            return y < p.y;
+        if (z != p.z)
+            return z < p.z;
+        return false;
     }
 };
 

@@ -10,11 +10,12 @@
 #include "Shape.h"
 
 class Sphere : public Shape {
+    std::vector<Triangle> triangles_;
 public:
-    Sphere();
-    void getTriangles(std::vector<Triangle>& dst) { }; //TODO
+    Sphere(Point center, float r);
+    void getTriangles(std::vector<Triangle>& dst);
 private:
-
+    void init(Point center, float r);
 };
 
 #endif	/* SPHERE_H */

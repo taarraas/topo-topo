@@ -12,13 +12,14 @@
 #include "MapParser.h"
 
 ShapePtr SceneFactory::createSphere(const Point& center, float r) {
-    ShapePtr shape = new Sphere();
+    ShapePtr shape = new Sphere(center, r);
+    LOG_INFO << "Created sphere " << center << ", radius = " << r;
     return shape;
 }
 
 ShapePtr SceneFactory::createCylinder(const Point& a, const Point& b, float r) {
-    LOG_INFO << "Created cylinder " << a << " - " << b << ", radius = " << r;
     ShapePtr shape = new Cylinder(a, b, r, 10, 10);
+    LOG_INFO << "Created cylinder " << a << " - " << b << ", radius = " << r;
     return shape;
 }
 
@@ -27,8 +28,21 @@ ScenePtr SceneFactory::createScene(std::string filename) {
     ScenePtr scene = new Scene();
     MapParser parser(filename);
     MapParser::MapElement el;
+    std::set<Point> alreadyAddedPoints;
     while (parser.next(el)) {
         scene->add(createCylinder(el.from, el.to, r));
+        
+        if (alreadyAddedPoints.find(el.from) != alreadyAddedPoints.end())
+            scene->add(createSphere(el.from, r));
+        else
+            alreadyAddedPoints.insert(el.from);
+        
+        if (alreadyAddedPoints.find(el.to) != alreadyAddedPoints.end())
+            scene->add(createSphere(el.to, r));
+        else
+            alreadyAddedPoints.insert(el.to);
+        
+        
     }
     return scene;    
 }

@@ -19,10 +19,12 @@
 int main(int argc, char** argv) {
     try {
         ScenePtr scene = SceneFactory::createScene("sample.map");
-        RendererPtr renderer = new OpenGlRenderer();
         std::vector<Triangle> triangles;
         scene->getTriangles(triangles);
+        
         ViewPtr view = new TopoView(triangles);
+
+        RendererPtr renderer = new OpenGlRenderer();
         renderer->run(view);
     } catch (Exception e) {
         LOG_INFO << e.message;
