@@ -12,14 +12,20 @@ MapParser::MapParser(std::string file)
 }
 
 bool MapParser::next(MapElement& el) {
+    char type = ' ';
+    while ( (ifstream >> type) && (type < 'A' || type > 'Z') ) {
+    }
+
     if (ifstream.eof())
         return false;
-    
-    char type;
-    ifstream >> type;
-    
+        
     switch (type) {
         case 'A' : {
+            float x, y, z;
+            ifstream >> x >> y >> z;
+            el.from = Point(x, y, z);
+            ifstream >> x >> y >> z;
+            el.to = Point(x, y, z);
             break;
         }
         default : {
@@ -27,7 +33,7 @@ bool MapParser::next(MapElement& el) {
         }
     }
     
-    return false;
+    return !ifstream.eof();
 }
 
 

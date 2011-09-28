@@ -14,6 +14,9 @@
 #include <boost/intrusive_ptr.hpp>
 #include <boost/foreach.hpp>
 #include "Object.h"
+#include <iostream>
+
+#define LOG_INFO (std::cout << std::endl)
 
 struct Point {
     float x;
@@ -21,6 +24,10 @@ struct Point {
     float z;
     Point() : x(0), y(0), z(0) { };
     Point(float cx, float cy, float cz) : x(cx), y(cy), z(cz) { };
+    
+    friend std::ostream &operator<<(std::ostream &stream, Point p) {
+        stream << "(" << p.x << ", " << p.y << ", " << p.z << ")";
+    }
 };
 
 struct Triangle {

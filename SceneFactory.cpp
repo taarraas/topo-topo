@@ -17,6 +17,7 @@ ShapePtr SceneFactory::createSphere(const Point& center, float r) {
 }
 
 ShapePtr SceneFactory::createCylinder(const Point& a, const Point& b, float r) {
+    LOG_INFO << "Created cylinder " << a << " - " << b << ", radius = " << r;
     ShapePtr shape = new Cylinder(a, b, r, 10, 10);
     return shape;
 }

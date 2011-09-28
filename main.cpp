@@ -12,7 +12,6 @@
 #include "OpenGlRenderer.h"
 #include "TopoView.h"
 #include "Renderer.h"
-#include <iostream>
 
 /*
  * 
@@ -26,7 +25,7 @@ int main(int argc, char** argv) {
         ViewPtr view = new TopoView(triangles);
         renderer->run(view);
     } catch (Exception e) {
-        std::cout << e.message << std::endl;
+        LOG_INFO << e.message;
         return -1;
     }
     return 0;
