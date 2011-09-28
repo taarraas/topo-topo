@@ -11,9 +11,7 @@ void TopoView::init()
 }
 
 void TopoView::reshape(int width, int height)
-{
-
-    
+{    
     glViewport(0, 0, (GLint)width, (GLint)height);
 
     glMatrixMode(GL_PROJECTION);
@@ -39,39 +37,16 @@ void TopoView::key(unsigned char key, int x, int y)
 void TopoView::draw()
 {
     glClear(GL_COLOR_BUFFER_BIT); 
-    glLoadIdentity();
-    glTranslatef(-1.5f,0.0f,-10.0f);
-    glRotatef(rtri,0.0f,1.0f,0.0f);
+    glLoadIdentity(); 
+    //glTranslatef(-1.5f,0.0f,-10.0f);
 
-    glBegin(GL_TRIANGLES);                      
-    glColor3f(1.0f,0.0f,0.0f);          // Red
-    glVertex3f( 0.0f, 1.0f, 0.0f);          // Top Of Triangle (Front)
-    glColor3f(0.0f,1.0f,0.0f);          // Green
-    glVertex3f(-1.0f,-1.0f, 1.0f);          // Left Of Triangle (Front)
-    glColor3f(0.0f,0.0f,1.0f);          // Blue
-    glVertex3f( 1.0f,-1.0f, 1.0f); 
-
-    glColor3f(1.0f,0.0f,0.0f);          // Red
-    glVertex3f( 0.0f, 1.0f, 0.0f);          // Top Of Triangle (Right)
-    glColor3f(0.0f,1.0f,0.0f);          // Green
-    glVertex3f( 1.0f,-1.0f, 1.0f);          // Left Of Triangle (Right)
-    glColor3f(0.0f,0.0f,1.0f);          // Blue
-    glVertex3f( 1.0f,-1.0f, -1.0f);  
-
-    glColor3f(1.0f,0.0f,0.0f);          // Red
-    glVertex3f( 0.0f, 1.0f, 0.0f);          // Top Of Triangle (Back)
-    glColor3f(0.0f,1.0f,0.0f);          // Green
-    glVertex3f( 1.0f,-1.0f, -1.0f);         // Left Of Triangle (Back)
-    glColor3f(0.0f,0.0f,1.0f);          // Blue
-    glVertex3f(-1.0f,-1.0f, -1.0f);  
-
-    glColor3f(1.0f,0.0f,0.0f);          // Red
-    glVertex3f( 0.0f, 1.0f, 0.0f);          // Top Of Triangle (Left)
-    glColor3f(0.0f,0.0f,1.0f);          // Blue
-    glVertex3f(-1.0f,-1.0f,-1.0f);          // Left Of Triangle (Left)
-    glColor3f(0.0f,1.0f,0.0f);          // Green
-    glVertex3f(-1.0f,-1.0f, 1.0f);  
-
+    glColor3f(1.0f,0.0f,0.0f);         
+    glBegin(GL_TRIANGLES);                          
+    BOOST_FOREACH (Triangle t, triangles_) {        
+        for (int v = 0; v < 3; ++v) {
+            glVertex3f(t.p[v].x, t.p[v].y, t.p[v].z);
+        }
+    }
     glEnd(); 
     glFlush();    
     glutSwapBuffers();
@@ -86,9 +61,9 @@ void TopoView::idle()
     double dt = t - t0;
     t0 = t;
 
-    rtri += dt * 360 / 5.0;
     glutPostRedisplay();
 }
 
-
-
+TopoView::TopoView(const std::vector<Triangle>& triangles) : triangles_(triangles) {
+    
+}

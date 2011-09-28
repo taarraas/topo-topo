@@ -12,11 +12,11 @@
 
 class Scene : public Object {
 public:
-    void getTriangles() { }; //TODO
+    void getTriangles(std::vector<Triangle>& dst);
     Scene();
-    void add(ShapePtr shape) { };
+    void add(ShapePtr shape);
 private:
-    
+    std::vector<ShapePtr> shapes_;
 };
 
 typedef boost::intrusive_ptr<Scene> ScenePtr;

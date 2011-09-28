@@ -12,6 +12,7 @@
 #include <string>
 #include <vector>
 #include <boost/intrusive_ptr.hpp>
+#include <boost/foreach.hpp>
 #include "Object.h"
 
 struct Point {

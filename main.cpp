@@ -19,7 +19,9 @@
 int main(int argc, char** argv) {
     ScenePtr scene = SceneFactory::createScene("file.dat");
     RendererPtr renderer = new OpenGlRenderer();
-    ViewPtr view = new TopoView();
+    std::vector<Triangle> triangles;
+    scene->getTriangles(triangles);
+    ViewPtr view = new TopoView(triangles);
     renderer->run(view);
     return 0;
 }
