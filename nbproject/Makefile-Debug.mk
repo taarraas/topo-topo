@@ -43,8 +43,8 @@ OBJECTFILES= \
 	${OBJECTDIR}/Object.o \
 	${OBJECTDIR}/SceneFactory.o \
 	${OBJECTDIR}/View.o \
-	${OBJECTDIR}/Geometry.o \
 	${OBJECTDIR}/MapParser.o \
+	${OBJECTDIR}/Geometry.o \
 	${OBJECTDIR}/Sphere.o
 
 
@@ -117,14 +117,15 @@ ${OBJECTDIR}/View.o: View.cpp
 	${RM} $@.d
 	$(COMPILE.cc) -g -MMD -MP -MF $@.d -o ${OBJECTDIR}/View.o View.cpp
 
-${OBJECTDIR}/Geometry.o: Geometry.cpp 
-	${MKDIR} -p ${OBJECTDIR}
-	${RM} $@.d
-	$(COMPILE.cc) -g -MMD -MP -MF $@.d -o ${OBJECTDIR}/Geometry.o Geometry.cpp
 ${OBJECTDIR}/MapParser.o: MapParser.cpp 
 	${MKDIR} -p ${OBJECTDIR}
 	${RM} $@.d
 	$(COMPILE.cc) -g -MMD -MP -MF $@.d -o ${OBJECTDIR}/MapParser.o MapParser.cpp
+
+${OBJECTDIR}/Geometry.o: Geometry.cpp 
+	${MKDIR} -p ${OBJECTDIR}
+	${RM} $@.d
+	$(COMPILE.cc) -g -MMD -MP -MF $@.d -o ${OBJECTDIR}/Geometry.o Geometry.cpp
 
 ${OBJECTDIR}/Sphere.o: Sphere.cpp 
 	${MKDIR} -p ${OBJECTDIR}
