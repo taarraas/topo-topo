@@ -34,12 +34,15 @@ OBJECTDIR=${CND_BUILDDIR}/${CND_CONF}/${CND_PLATFORM}
 
 # Object Files
 OBJECTFILES= \
+	${OBJECTDIR}/TopoView.o \
 	${OBJECTDIR}/main.o \
 	${OBJECTDIR}/Scene.o \
 	${OBJECTDIR}/Shape.o \
 	${OBJECTDIR}/Cylinder.o \
+	${OBJECTDIR}/OpenGlRenderer.o \
 	${OBJECTDIR}/Object.o \
 	${OBJECTDIR}/SceneFactory.o \
+	${OBJECTDIR}/View.o \
 	${OBJECTDIR}/Sphere.o
 
 
@@ -61,11 +64,16 @@ LDLIBSOPTIONS=-L/usr/include/boost
 
 # Build Targets
 .build-conf: ${BUILD_SUBPROJECTS}
-	"${MAKE}"  -f nbproject/Makefile-${CND_CONF}.mk ${CND_DISTDIR}/${CND_CONF}/${CND_PLATFORM}/topo
+	"${MAKE}"  -f nbproject/Makefile-${CND_CONF}.mk ${CND_DISTDIR}/${CND_CONF}/${CND_PLATFORM}/topo-topo
 
-${CND_DISTDIR}/${CND_CONF}/${CND_PLATFORM}/topo: ${OBJECTFILES}
+${CND_DISTDIR}/${CND_CONF}/${CND_PLATFORM}/topo-topo: ${OBJECTFILES}
 	${MKDIR} -p ${CND_DISTDIR}/${CND_CONF}/${CND_PLATFORM}
-	${LINK.cc} -Lboost_system -o ${CND_DISTDIR}/${CND_CONF}/${CND_PLATFORM}/topo ${OBJECTFILES} ${LDLIBSOPTIONS} 
+	${LINK.cc} -Lboost_system -lGL -lGLU -lglut -o ${CND_DISTDIR}/${CND_CONF}/${CND_PLATFORM}/topo-topo ${OBJECTFILES} ${LDLIBSOPTIONS} 
+
+${OBJECTDIR}/TopoView.o: TopoView.cpp 
+	${MKDIR} -p ${OBJECTDIR}
+	${RM} $@.d
+	$(COMPILE.cc) -g -MMD -MP -MF $@.d -o ${OBJECTDIR}/TopoView.o TopoView.cpp
 
 ${OBJECTDIR}/main.o: main.cpp 
 	${MKDIR} -p ${OBJECTDIR}
@@ -87,6 +95,11 @@ ${OBJECTDIR}/Cylinder.o: Cylinder.cpp
 	${RM} $@.d
 	$(COMPILE.cc) -g -MMD -MP -MF $@.d -o ${OBJECTDIR}/Cylinder.o Cylinder.cpp
 
+${OBJECTDIR}/OpenGlRenderer.o: OpenGlRenderer.cpp 
+	${MKDIR} -p ${OBJECTDIR}
+	${RM} $@.d
+	$(COMPILE.cc) -g -MMD -MP -MF $@.d -o ${OBJECTDIR}/OpenGlRenderer.o OpenGlRenderer.cpp
+
 ${OBJECTDIR}/Object.o: Object.cpp 
 	${MKDIR} -p ${OBJECTDIR}
 	${RM} $@.d
@@ -96,6 +109,11 @@ ${OBJECTDIR}/SceneFactory.o: SceneFactory.cpp
 	${MKDIR} -p ${OBJECTDIR}
 	${RM} $@.d
 	$(COMPILE.cc) -g -MMD -MP -MF $@.d -o ${OBJECTDIR}/SceneFactory.o SceneFactory.cpp
+
+${OBJECTDIR}/View.o: View.cpp 
+	${MKDIR} -p ${OBJECTDIR}
+	${RM} $@.d
+	$(COMPILE.cc) -g -MMD -MP -MF $@.d -o ${OBJECTDIR}/View.o View.cpp
 
 ${OBJECTDIR}/Sphere.o: Sphere.cpp 
 	${MKDIR} -p ${OBJECTDIR}
@@ -108,7 +126,7 @@ ${OBJECTDIR}/Sphere.o: Sphere.cpp
 # Clean Targets
 .clean-conf: ${CLEAN_SUBPROJECTS}
 	${RM} -r ${CND_BUILDDIR}/${CND_CONF}
-	${RM} ${CND_DISTDIR}/${CND_CONF}/${CND_PLATFORM}/topo
+	${RM} ${CND_DISTDIR}/${CND_CONF}/${CND_PLATFORM}/topo-topo
 
 # Subprojects
 .clean-subprojects:

@@ -9,14 +9,20 @@
 #include "Core.h"
 #include "Scene.h"
 #include "SceneFactory.h"
+#include "OpenGlRenderer.h"
+#include "TopoView.h"
+#include "Renderer.h"
 
 /*
  * 
  */
 int main(int argc, char** argv) {
     ScenePtr scene = SceneFactory::createScene("file.dat");
-    ViewPtr view = ViewFactory::creaty(scene);
-    OpenGLRenderer::render(view);
+//    ViewPtr view = ViewFactory::creaty(scene);
+//    OpenGLRenderer::render(view);
+    Renderer renderer;
+    ViewPtr view = new TopoView();
+    renderer.run(view);
     return 0;
 }
 

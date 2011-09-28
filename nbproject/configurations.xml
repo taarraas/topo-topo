@@ -7,10 +7,14 @@
       <itemPath>Core.h</itemPath>
       <itemPath>Cylinder.h</itemPath>
       <itemPath>Object.h</itemPath>
+      <itemPath>OpenGlRenderer.h</itemPath>
+      <itemPath>Renderer.h</itemPath>
       <itemPath>Scene.h</itemPath>
       <itemPath>SceneFactory.h</itemPath>
       <itemPath>Shape.h</itemPath>
       <itemPath>Sphere.h</itemPath>
+      <itemPath>TopoView.h</itemPath>
+      <itemPath>View.h</itemPath>
     </logicalFolder>
     <logicalFolder name="ResourceFiles"
                    displayName="Resource Files"
@@ -21,10 +25,13 @@
                    projectFiles="true">
       <itemPath>Cylinder.cpp</itemPath>
       <itemPath>Object.cpp</itemPath>
+      <itemPath>OpenGlRenderer.cpp</itemPath>
       <itemPath>Scene.cpp</itemPath>
       <itemPath>SceneFactory.cpp</itemPath>
       <itemPath>Shape.cpp</itemPath>
       <itemPath>Sphere.cpp</itemPath>
+      <itemPath>TopoView.cpp</itemPath>
+      <itemPath>View.cpp</itemPath>
       <itemPath>main.cpp</itemPath>
     </logicalFolder>
     <logicalFolder name="TestFiles"
@@ -51,7 +58,7 @@
           <linkerAddLib>
             <pElem>/usr/include/boost</pElem>
           </linkerAddLib>
-          <commandLine>-Lboost_system</commandLine>
+          <commandLine>-Lboost_system -lGL -lGLU -lglut</commandLine>
         </linkerTool>
       </compileType>
     </conf>

@@ -9,19 +9,19 @@ CND_DISTDIR=dist
 # Debug configuration
 CND_PLATFORM_Debug=GNU-Linux-x86
 CND_ARTIFACT_DIR_Debug=dist/Debug/GNU-Linux-x86
-CND_ARTIFACT_NAME_Debug=topo
-CND_ARTIFACT_PATH_Debug=dist/Debug/GNU-Linux-x86/topo
+CND_ARTIFACT_NAME_Debug=topo-topo
+CND_ARTIFACT_PATH_Debug=dist/Debug/GNU-Linux-x86/topo-topo
 CND_PACKAGE_DIR_Debug=dist/Debug/GNU-Linux-x86/package
-CND_PACKAGE_NAME_Debug=topo.tar
-CND_PACKAGE_PATH_Debug=dist/Debug/GNU-Linux-x86/package/topo.tar
+CND_PACKAGE_NAME_Debug=topo-topo.tar
+CND_PACKAGE_PATH_Debug=dist/Debug/GNU-Linux-x86/package/topo-topo.tar
 # Release configuration
 CND_PLATFORM_Release=GNU-Linux-x86
 CND_ARTIFACT_DIR_Release=dist/Release/GNU-Linux-x86
-CND_ARTIFACT_NAME_Release=topo
-CND_ARTIFACT_PATH_Release=dist/Release/GNU-Linux-x86/topo
+CND_ARTIFACT_NAME_Release=topo-topo
+CND_ARTIFACT_PATH_Release=dist/Release/GNU-Linux-x86/topo-topo
 CND_PACKAGE_DIR_Release=dist/Release/GNU-Linux-x86/package
-CND_PACKAGE_NAME_Release=topo.tar
-CND_PACKAGE_PATH_Release=dist/Release/GNU-Linux-x86/package/topo.tar
+CND_PACKAGE_NAME_Release=topo-topo.tar
+CND_PACKAGE_PATH_Release=dist/Release/GNU-Linux-x86/package/topo-topo.tar
 #
 # include compiler specific variables
 #
