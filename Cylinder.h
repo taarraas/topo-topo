@@ -11,11 +11,12 @@
 #include "Shape.h"
 
 class Cylinder : public Shape {
+    std::vector<Triangle> triangles_;
 public:
-    Cylinder();
-    void getTriangles(std::vector<Triangle>& dst) { }; //TODO
+    Cylinder(Point a, Point b, float r, int dCount, int lCount);
+    void getTriangles(std::vector<Triangle>& dst);
 private:
-
+    void init(Point a, Point b, float r, int dCount, int lCount);
 };
 
 #endif	/* CYLINDER_H */

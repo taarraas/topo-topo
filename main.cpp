@@ -18,8 +18,6 @@
  */
 int main(int argc, char** argv) {
     ScenePtr scene = SceneFactory::createScene("file.dat");
-//    ViewPtr view = ViewFactory::creaty(scene);
-//    OpenGLRenderer::render(view);
     RendererPtr renderer = new OpenGlRenderer();
     ViewPtr view = new TopoView();
     renderer->run(view);

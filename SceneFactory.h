@@ -14,8 +14,8 @@
 
 class SceneFactory {
 public:
-    static ShapePtr createSphere(const Point& center);
-    static ShapePtr createCylinder(const Point& a, const Point& b);
+    static ShapePtr createSphere(const Point& center, float r);
+    static ShapePtr createCylinder(const Point& a, const Point& b, float r);
     static ScenePtr createScene(std::string filename);
 };
 

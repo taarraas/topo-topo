@@ -7,6 +7,15 @@
 
 #include "Cylinder.h"
 
-Cylinder::Cylinder() {
+void Cylinder::getTriangles(std::vector<Triangle>& dst) {
+    dst.clear();
+    dst.insert(dst.begin(), triangles_.begin(), triangles_.end());
 }
 
+Cylinder::Cylinder(Point a, Point b, float r, int dCount, int lCount) {
+    init(a, b, r, dCount, lCount);
+}
+
+void Cylinder::init(Point a, Point b, float r, int dCount, int lCount) {
+    //TODO vlad implement it
+}
