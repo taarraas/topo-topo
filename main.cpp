@@ -17,12 +17,19 @@
  * 
  */
 int main(int argc, char** argv) {
-    ScenePtr scene = SceneFactory::createScene("file.dat");
-    RendererPtr renderer = new OpenGlRenderer();
-    std::vector<Triangle> triangles;
-    scene->getTriangles(triangles);
-    ViewPtr view = new TopoView(triangles);
-    renderer->run(view);
+    try {
+        ScenePtr scene = SceneFactory::createScene("sample.map");
+        std::vector<Triangle> triangles;
+        scene->getTriangles(triangles);
+        
+        ViewPtr view = new TopoView(triangles);
+
+        RendererPtr renderer = new OpenGlRenderer();
+        renderer->run(view);
+    } catch (Exception e) {
+        LOG_INFO << e.message;
+        return -1;
+    }
     return 0;
 }
 

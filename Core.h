@@ -12,9 +12,13 @@
 #include <string>
 #include <vector>
 #include <cmath>
+#include <set>
 #include <boost/intrusive_ptr.hpp>
 #include <boost/foreach.hpp>
 #include "Object.h"
+#include <iostream>
+
+#define LOG_INFO (std::cout << std::endl)
 
 struct Point {
     float x;
@@ -37,6 +41,20 @@ struct Point {
     float abs2() const { return x*x + y*y + z*z; }
     float abs() const { return sqrt(abs2()); }
     Point norm() const { return *this / abs(); }
+    
+    friend std::ostream &operator<<(std::ostream &stream, Point p) {
+        stream << "(" << p.x << ", " << p.y << ", " << p.z << ")";
+    }
+    
+    bool operator<(const Point& p) const {
+        if (x != p.x)
+            return x < p.x;
+        if (y != p.y)
+            return y < p.y;
+        if (z != p.z)
+            return z < p.z;
+        return false;
+    }
 };
 
 struct Triangle {
@@ -51,6 +69,11 @@ struct Triangle {
         p[1] = p1;
         p[2] = p2;
     }
+};
+
+struct Exception {
+    std::string message;
+    Exception(std::string msg) : message(msg) { };
 };
 
 #endif	/* CORE_H */
