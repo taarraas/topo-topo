@@ -3,4 +3,5 @@
 /nbproject/private/
 *.[oa]
 *~
+.dep.inc
 /build/Release/
