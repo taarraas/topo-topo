@@ -12,17 +12,23 @@
 #include "OpenGlRenderer.h"
 #include "TopoView.h"
 #include "Renderer.h"
+#include <iostream>
 
 /*
  * 
  */
 int main(int argc, char** argv) {
-    ScenePtr scene = SceneFactory::createScene("file.dat");
-    RendererPtr renderer = new OpenGlRenderer();
-    std::vector<Triangle> triangles;
-    scene->getTriangles(triangles);
-    ViewPtr view = new TopoView(triangles);
-    renderer->run(view);
+    try {
+        ScenePtr scene = SceneFactory::createScene("sample.map");
+        RendererPtr renderer = new OpenGlRenderer();
+        std::vector<Triangle> triangles;
+        scene->getTriangles(triangles);
+        ViewPtr view = new TopoView(triangles);
+        renderer->run(view);
+    } catch (Exception e) {
+        std::cout << e.message << std::endl;
+        return -1;
+    }
     return 0;
 }
 

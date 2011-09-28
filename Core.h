@@ -32,5 +32,10 @@ struct Triangle {
     };
 };
 
+struct Exception {
+    std::string message;
+    Exception(std::string msg) : message(msg) { };
+};
+
 #endif	/* CORE_H */
 

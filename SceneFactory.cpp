@@ -9,6 +9,7 @@
 #include "Cylinder.h"
 #include "Sphere.h"
 #include "Scene.h"
+#include "MapParser.h"
 
 ShapePtr SceneFactory::createSphere(const Point& center, float r) {
     ShapePtr shape = new Sphere();
@@ -21,8 +22,13 @@ ShapePtr SceneFactory::createCylinder(const Point& a, const Point& b, float r) {
 }
 
 ScenePtr SceneFactory::createScene(std::string filename) {
+    const float r = 0.3;
     ScenePtr scene = new Scene();
-    scene->add(createCylinder(Point(0, 0, 0), Point(0, 0, 1), 0.5));
+    MapParser parser(filename);
+    MapParser::MapElement el;
+    while (parser.next(el)) {
+        scene->add(createCylinder(el.from, el.to, r));
+    }
     return scene;    
 }
 
