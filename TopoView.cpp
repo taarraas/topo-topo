@@ -27,6 +27,20 @@ void TopoView::key(unsigned char key, int x, int y)
     switch (key) {
     case 27:
 	exit(0);
+    case 'w':
+        wire_ = !wire_;
+        if (wire_)
+            glPolygonMode(GL_FRONT_AND_BACK, GL_LINE);
+        else
+            glPolygonMode(GL_FRONT_AND_BACK, GL_FILL);
+        break;
+    case 'c':
+        faceCulling_ = !faceCulling_;
+        if (faceCulling_)
+            glEnable(GL_CULL_FACE);
+        else
+            glDisable(GL_CULL_FACE);
+        break;      
     default:
 	break;
     }
@@ -37,14 +51,15 @@ void TopoView::key(unsigned char key, int x, int y)
 void TopoView::draw()
 {
     glClear(GL_COLOR_BUFFER_BIT); 
-    glLoadIdentity(); 
-    //glTranslatef(-1.5f,0.0f,-10.0f);
+    glLoadIdentity();     
+    glTranslatef(-1.5f,0.0f,-10.0f);
+    glRotatef(rot, 1, 1, 0);
 
     glColor3f(1.0f,0.0f,0.0f);         
     glBegin(GL_TRIANGLES);                          
     BOOST_FOREACH (Triangle t, triangles_) {        
         for (int v = 0; v < 3; ++v) {
-            glVertex3f(t.p[v].x, t.p[v].y, t.p[v].z);
+            glVertex3f(t[v].x, t[v].y, t[v].z);
         }
     }
     glEnd(); 
@@ -60,10 +75,12 @@ void TopoView::idle()
 	t0 = t;
     double dt = t - t0;
     t0 = t;
-
+    rot += dt * 45;
     glutPostRedisplay();
 }
 
-TopoView::TopoView(const std::vector<Triangle>& triangles) : triangles_(triangles) {
-    
+TopoView::TopoView(const std::vector<Triangle>& triangles) : triangles_(triangles) {    
+    rot = 0;
+    wire_ = false;
+    faceCulling_ = false;
 }

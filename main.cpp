@@ -12,6 +12,7 @@
 #include "OpenGlRenderer.h"
 #include "TopoView.h"
 #include "Renderer.h"
+#include "Geometry.h"
 
 /*
  * 

@@ -12,6 +12,10 @@ float Geometry::det(float a, float b, float c, float d) {
     return a * d - b * c;
 }
 
+float Geometry::det(float a, float b, float c, float d, float e, float f, float g, float h, float i) {
+    return a * det(e, f, h, i) - b * det(d, f, g, i) + c * det(d, e, g, h);
+}
+
 float Geometry::dot(const Point& a, const Point& b) {
     return a.x * b.x + a.y * b.y + a.z * b.z;
 }
@@ -35,10 +39,31 @@ void Geometry::findOrthonormal(const Point & a, Point & b, Point & c) {
     Point u;
     int i = 0;
     do {
-        u = cross(u, p[i]);
-    } while (!eq(u.abs(), 0));
+        u = cross(a, p[i]);
+        ++i;
+    } while (eq(u.abs(), 0));      
     b = cross(u, a).norm();
     c = cross(a, b).norm();    
+}
+
+Triangle Geometry::ccw_triangle(const Point & a, const Point & b, const Point & c, const Point & d) {    
+    float f = a.x * det(b.y, b.z, 1, c.y, c.z, 1, d.y, d.z, 1) -
+              a.y * det(b.x, b.z, 1, c.x, c.z, 1, d.x, d.z, 1) +
+              a.z * det(b.x, b.y, 1, c.x, c.y, 1, d.x, d.y, 1) -
+                1 * det(b.x, b.y, b.z, c.x, c.y, c.z, d.x, d.y, d.z);
+    if (f > 0)
+        return Triangle(a, b, c);
+    return Triangle(a, c, b);
+}
+
+Triangle Geometry::cw_triangle(const Point & a, const Point & b, const Point & c, const Point & d) {    
+    float f = a.x * det(b.y, b.z, 1, c.y, c.z, 1, d.y, d.z, 1) -
+              a.y * det(b.x, b.z, 1, c.x, c.z, 1, d.x, d.z, 1) +
+              a.z * det(b.x, b.y, 1, c.x, c.y, 1, d.x, d.y, 1) -
+                1 * det(b.x, b.y, b.z, c.x, c.y, c.z, d.x, d.y, d.z);
+    if (f < 0)
+        return Triangle(a, b, c);
+    return Triangle(a, c, b);
 }
 
 Geometry::Geometry() {

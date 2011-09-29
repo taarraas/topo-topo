@@ -69,6 +69,9 @@ struct Triangle {
         p[1] = p1;
         p[2] = p2;
     }
+    Point& operator [] (int index) {
+        return p[index];
+    }
 };
 
 struct Exception {

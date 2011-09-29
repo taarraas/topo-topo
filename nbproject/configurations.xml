@@ -6,6 +6,7 @@
                    projectFiles="true">
       <itemPath>Core.h</itemPath>
       <itemPath>Cylinder.h</itemPath>
+      <itemPath>Geometry.h</itemPath>
       <itemPath>MapParser.h</itemPath>
       <itemPath>Object.h</itemPath>
       <itemPath>OpenGlRenderer.h</itemPath>
@@ -26,6 +27,7 @@
                    displayName="Source Files"
                    projectFiles="true">
       <itemPath>Cylinder.cpp</itemPath>
+      <itemPath>Geometry.cpp</itemPath>
       <itemPath>MapParser.cpp</itemPath>
       <itemPath>Object.cpp</itemPath>
       <itemPath>OpenGlRenderer.cpp</itemPath>

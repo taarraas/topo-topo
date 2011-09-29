@@ -48,8 +48,6 @@ void OpenGlRenderer::run(ViewPtr view) {
 
     view->init();
 
-    glEnable(GL_CULL_FACE);  
-
     glutReshapeFunc(OpenGlRenderer::reshape);
     glutKeyboardFunc(OpenGlRenderer::key);
     glutDisplayFunc(OpenGlRenderer::draw);

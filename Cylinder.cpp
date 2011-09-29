@@ -20,6 +20,7 @@ void Cylinder::init(Point a, Point b, float r, int dCount, int lCount) {
     Point u = (b - a).norm();
     Point v, w;
     Geometry::findOrthonormal(u, v, w);
+    
     for (int stripe = 0; stripe < dCount; ++stripe) {
         float beginAngle = 2 * Geometry::PI * stripe / dCount;
         float endAngle = 2 * Geometry::PI * (stripe + 1) / dCount;
@@ -30,7 +31,18 @@ void Cylinder::init(Point a, Point b, float r, int dCount, int lCount) {
         Point r1 = b + v * (r * cos(beginAngle)) + w * (r * sin(beginAngle));
         Point r2 = b + v * (r * cos(endAngle)) + w * (r * sin(endAngle));
         
-        triangles_.push_back(Triangle(l1, l2, r1));
-        triangles_.push_back(Triangle(l1, l2, r2));
+        Point vup = (r1 - l1) / lCount;
+        Point vdown = (r2 - l2) / lCount;
+        
+        Point rectLU = l1, rectRU = l1 + vup;
+        Point rectLD = l2, rectRD = l2 + vdown;
+        for (int len = 0; len < lCount; ++len) {
+            triangles_.push_back(Geometry::ccw_triangle(rectLU, rectRD, rectRU, a));
+            triangles_.push_back(Geometry::ccw_triangle(rectLU, rectRD, rectLD, a));
+            rectLU = rectRU;
+            rectLD = rectRD;
+            rectRU = rectRU + vup;
+            rectRD = rectRD + vdown;
+        }        
     }
 }
