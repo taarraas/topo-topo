@@ -3,6 +3,9 @@
 
 #include "Core.h"
 #include "View.h"
+#include "ViewParams.h"
+#include "ViewState.h"
+#include "CameraState.h"
 
 class TopoView : public View {    
 public:
@@ -14,14 +17,16 @@ public:
     virtual void mouse(int button, int state, int x, int y);
     virtual void motion(int x, int y);   
     
+    void setModelType(ViewParams::ModelType modelType);
+    void setFaceCulling(bool faceCulling);
+    
     TopoView(const std::vector<Triangle> & triangles);
     
 private:   
-    const std::vector<Triangle> & triangles_;    
-    float rot;
-    bool wire_;
-    bool faceCulling_;
-    bool mouseGrabbed_;
+    ViewParams params;
+    ViewState viewState;
+    CameraState cameraState;
+    const std::vector<Triangle> & triangles_;
 };
 
 #endif

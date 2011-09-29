@@ -20,6 +20,7 @@ public:
     static float dot(const Point & a, const Point & b);
     static bool eq(float a, float b);        
     static void findOrthonormal(const Point & a, Point & b, Point & c);    
+    static float radian(float x);
     static Triangle ccw_triangle(const Point & a, const Point & b, const Point & c, const Point & d);
     static Triangle cw_triangle(const Point & a, const Point & b, const Point & c, const Point & d);
     virtual ~Geometry();

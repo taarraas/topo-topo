@@ -28,6 +28,10 @@ Point Geometry::cross(const Point & a, const Point & b) {
            );
 }
 
+float Geometry::radian(float x) {
+    return x / 180.0 * PI;
+}
+
 void Geometry::findOrthonormal(const Point & a, Point & b, Point & c) {
     static Point p[4] = 
     { 

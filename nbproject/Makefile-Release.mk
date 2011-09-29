@@ -43,9 +43,12 @@ OBJECTFILES= \
 	${OBJECTDIR}/Object.o \
 	${OBJECTDIR}/SceneFactory.o \
 	${OBJECTDIR}/View.o \
+	${OBJECTDIR}/CameraState.o \
 	${OBJECTDIR}/MapParser.o \
+	${OBJECTDIR}/ViewParams.o \
 	${OBJECTDIR}/Geometry.o \
-	${OBJECTDIR}/Sphere.o
+	${OBJECTDIR}/Sphere.o \
+	${OBJECTDIR}/ViewState.o
 
 
 # C Compiler Flags
@@ -117,10 +120,20 @@ ${OBJECTDIR}/View.o: View.cpp
 	${RM} $@.d
 	$(COMPILE.cc) -O2 -MMD -MP -MF $@.d -o ${OBJECTDIR}/View.o View.cpp
 
+${OBJECTDIR}/CameraState.o: CameraState.cpp 
+	${MKDIR} -p ${OBJECTDIR}
+	${RM} $@.d
+	$(COMPILE.cc) -O2 -MMD -MP -MF $@.d -o ${OBJECTDIR}/CameraState.o CameraState.cpp
+
 ${OBJECTDIR}/MapParser.o: MapParser.cpp 
 	${MKDIR} -p ${OBJECTDIR}
 	${RM} $@.d
 	$(COMPILE.cc) -O2 -MMD -MP -MF $@.d -o ${OBJECTDIR}/MapParser.o MapParser.cpp
+
+${OBJECTDIR}/ViewParams.o: ViewParams.cpp 
+	${MKDIR} -p ${OBJECTDIR}
+	${RM} $@.d
+	$(COMPILE.cc) -O2 -MMD -MP -MF $@.d -o ${OBJECTDIR}/ViewParams.o ViewParams.cpp
 
 ${OBJECTDIR}/Geometry.o: Geometry.cpp 
 	${MKDIR} -p ${OBJECTDIR}
@@ -131,6 +144,11 @@ ${OBJECTDIR}/Sphere.o: Sphere.cpp
 	${MKDIR} -p ${OBJECTDIR}
 	${RM} $@.d
 	$(COMPILE.cc) -O2 -MMD -MP -MF $@.d -o ${OBJECTDIR}/Sphere.o Sphere.cpp
+
+${OBJECTDIR}/ViewState.o: ViewState.cpp 
+	${MKDIR} -p ${OBJECTDIR}
+	${RM} $@.d
+	$(COMPILE.cc) -O2 -MMD -MP -MF $@.d -o ${OBJECTDIR}/ViewState.o ViewState.cpp
 
 # Subprojects
 .build-subprojects:

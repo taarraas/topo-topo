@@ -1,4 +1,6 @@
 #include "TopoView.h"
+#include "ViewState.h"
+#include "CameraState.h"
 #include <GL/glut.h>
 #include <cstdio>
 
@@ -12,6 +14,7 @@ void TopoView::init()
 
 void TopoView::reshape(int width, int height)
 {    
+    std::cout << "reshape" << std::endl;
     glViewport(0, 0, (GLint)width, (GLint)height);
 
     glMatrixMode(GL_PROJECTION);
@@ -23,23 +26,32 @@ void TopoView::reshape(int width, int height)
 
 void TopoView::key(unsigned char key, int x, int y)
 {
-
     switch (key) {
     case 27:
 	exit(0);
     case 'w':
-        wire_ = !wire_;
-        if (wire_)
-            glPolygonMode(GL_FRONT_AND_BACK, GL_LINE);
+        cameraState.goForward(0.1);
+        break;
+    case 's':
+        cameraState.goBackward(0.1);
+        break;
+    case 'a':
+        cameraState.goLeft(0.1);
+        break;
+    case 'd':
+        cameraState.goRight(0.1);
+        break;            
+    case 'm':        
+        if (params.modelType == ViewParams::SOLID)
+            params.modelType = ViewParams::WIRE;
         else
-            glPolygonMode(GL_FRONT_AND_BACK, GL_FILL);
+            params.modelType = ViewParams::SOLID;
+        
+        setModelType(params.modelType);    
         break;
     case 'c':
-        faceCulling_ = !faceCulling_;
-        if (faceCulling_)
-            glEnable(GL_CULL_FACE);
-        else
-            glDisable(GL_CULL_FACE);
+        params.faceCulling = !params.faceCulling;
+        setFaceCulling(params.faceCulling);
         break;      
     default:
 	break;
@@ -52,8 +64,9 @@ void TopoView::draw()
 {
     glClear(GL_COLOR_BUFFER_BIT); 
     glLoadIdentity();     
-    glTranslatef(-1.5f,0.0f,-10.0f);
-    glRotatef(rot, 1, 1, 0);
+    glRotatef(cameraState.xrot, 1, 0, 0);
+    glRotatef(cameraState.yrot, 0, 1, 0);
+    glTranslatef(-cameraState.pos.x, -cameraState.pos.y, -cameraState.pos.z);        
 
     glColor3f(1.0f,0.0f,0.0f);         
     glBegin(GL_TRIANGLES);                          
@@ -75,20 +88,44 @@ void TopoView::idle()
 	t0 = t;
     double dt = t - t0;
     t0 = t;
-    rot += dt * 45;
     glutPostRedisplay();
 }
 
 void TopoView::mouse(int button, int state, int x, int y) {
-    mouseGrabbed_ = (state == GLUT_DOWN);
+    if (state == GLUT_DOWN) {
+        viewState.mouseDown = (state == GLUT_DOWN);
+        viewState.lastMouseX = x;
+        viewState.lastMouseY = y;
+    }
 }
 
-void TopoView::motion(int x, int y) {
+void TopoView::motion(int x, int y) {    
+    if (viewState.mouseDown) {
+        cameraState.mouseMovement(x - viewState.lastMouseX, y - viewState.lastMouseY);
+        viewState.lastMouseX = x;
+        viewState.lastMouseY = y;
+    }
+}
+
+void TopoView::setModelType(ViewParams::ModelType modelType) {
+    switch (modelType) {
+        case ViewParams::WIRE:
+            glPolygonMode(GL_FRONT_AND_BACK, GL_LINE);
+            break;
+        case ViewParams::SOLID:
+            glPolygonMode(GL_FRONT_AND_BACK, GL_FILL);
+            break;
+        default:            
+            break;                    
+    }           
+}
+
+void TopoView::setFaceCulling(bool faceCulling) {
+    if (faceCulling)
+        glEnable(GL_CULL_FACE);
+    else
+        glDisable(GL_CULL_FACE);
 }
 
 TopoView::TopoView(const std::vector<Triangle>& triangles) : triangles_(triangles) {    
-    rot = 0;
-    wire_ = false;
-    faceCulling_ = false;
-    mouseGrabbed_ = false;
 }

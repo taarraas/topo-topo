@@ -4,6 +4,7 @@
     <logicalFolder name="HeaderFiles"
                    displayName="Header Files"
                    projectFiles="true">
+      <itemPath>CameraState.h</itemPath>
       <itemPath>Core.h</itemPath>
       <itemPath>Cylinder.h</itemPath>
       <itemPath>Geometry.h</itemPath>
@@ -17,6 +18,8 @@
       <itemPath>Sphere.h</itemPath>
       <itemPath>TopoView.h</itemPath>
       <itemPath>View.h</itemPath>
+      <itemPath>ViewParams.h</itemPath>
+      <itemPath>ViewState.h</itemPath>
     </logicalFolder>
     <logicalFolder name="ResourceFiles"
                    displayName="Resource Files"
@@ -26,6 +29,7 @@
     <logicalFolder name="SourceFiles"
                    displayName="Source Files"
                    projectFiles="true">
+      <itemPath>CameraState.cpp</itemPath>
       <itemPath>Cylinder.cpp</itemPath>
       <itemPath>Geometry.cpp</itemPath>
       <itemPath>MapParser.cpp</itemPath>
@@ -37,6 +41,8 @@
       <itemPath>Sphere.cpp</itemPath>
       <itemPath>TopoView.cpp</itemPath>
       <itemPath>View.cpp</itemPath>
+      <itemPath>ViewParams.cpp</itemPath>
+      <itemPath>ViewState.cpp</itemPath>
       <itemPath>main.cpp</itemPath>
     </logicalFolder>
     <logicalFolder name="TestFiles"
