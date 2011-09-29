@@ -22,6 +22,14 @@ void OpenGlRenderer::idle() {
     OpenGlRenderer::view->idle();
 }
 
+void OpenGlRenderer::mouse(int button, int state, int x, int y) {
+    OpenGlRenderer::view->mouse(button, state, x, y);
+}
+
+void OpenGlRenderer::motion(int x, int y) {
+    OpenGlRenderer::view->motion(x, y);
+}
+
 void OpenGlRenderer::visible(int vis) {
     if (vis == GLUT_VISIBLE)
 	glutIdleFunc(OpenGlRenderer::idle);
@@ -48,6 +56,8 @@ void OpenGlRenderer::run(ViewPtr view) {
 
     view->init();
 
+    glutMouseFunc(OpenGlRenderer::mouse);
+    glutMotionFunc(OpenGlRenderer::motion);
     glutReshapeFunc(OpenGlRenderer::reshape);
     glutKeyboardFunc(OpenGlRenderer::key);
     glutDisplayFunc(OpenGlRenderer::draw);

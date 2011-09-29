@@ -11,7 +11,9 @@ public:
     virtual void key(unsigned char key, int x, int y);    
     virtual void draw();
     virtual void idle();   
-       
+    virtual void mouse(int button, int state, int x, int y);
+    virtual void motion(int x, int y);   
+    
     TopoView(const std::vector<Triangle> & triangles);
     
 private:   
@@ -19,6 +21,7 @@ private:
     float rot;
     bool wire_;
     bool faceCulling_;
+    bool mouseGrabbed_;
 };
 
 #endif

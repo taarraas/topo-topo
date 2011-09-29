@@ -14,6 +14,8 @@ public:
 
     static void draw();
     static void idle();
+    static void mouse(int button, int state, int x, int y);
+    static void motion();
 
     static void visible(int vis);
     

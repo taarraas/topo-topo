@@ -79,8 +79,16 @@ void TopoView::idle()
     glutPostRedisplay();
 }
 
+void TopoView::mouse(int button, int state, int x, int y) {
+    mouseGrabbed_ = (state == GLUT_DOWN);
+}
+
+void TopoView::motion(int x, int y) {
+}
+
 TopoView::TopoView(const std::vector<Triangle>& triangles) : triangles_(triangles) {    
     rot = 0;
     wire_ = false;
     faceCulling_ = false;
+    mouseGrabbed_ = false;
 }
