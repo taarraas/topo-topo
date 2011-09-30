@@ -55,6 +55,10 @@ struct Point {
             return z < p.z;
         return false;
     }
+    
+    friend float dist(const Point& q, const Point& w) {
+        return sqrt((q.x-w.x)*(q.x-w.x) + (q.y-w.y)*(q.y-w.y) + (q.z-w.z)*(q.z-w.z));
+    }
 };
 
 struct Triangle {

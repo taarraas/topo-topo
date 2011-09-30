@@ -16,7 +16,12 @@ void Scene::getTriangles(std::vector<Triangle>& dst) {
     }
 }
 
-void Scene::add(ShapePtr shape) { 
+void Scene::add(ShapePtr shape) {
+    BOOST_FOREACH(ShapePtr sh, shapes_) {
+        shape->remove(sh);
+        sh->remove(shape);
+    }
+    
     shapes_.push_back(shape); 
 }
 

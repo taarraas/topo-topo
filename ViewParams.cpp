@@ -9,6 +9,7 @@
 
 ViewParams::ViewParams() {
     modelType = SOLID;
+    faceCulling = false;
 }
 
 ViewParams::ViewParams(const ViewParams& orig) {

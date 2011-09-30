@@ -70,7 +70,7 @@ void TopoView::draw()
 
     glColor3f(1.0f,0.0f,0.0f);         
     glBegin(GL_TRIANGLES);                          
-    BOOST_FOREACH (Triangle t, triangles_) {        
+    BOOST_FOREACH (Triangle t, triangles_) {
         for (int v = 0; v < 3; ++v) {
             glVertex3f(t[v].x, t[v].y, t[v].z);
         }
@@ -128,4 +128,6 @@ void TopoView::setFaceCulling(bool faceCulling) {
 }
 
 TopoView::TopoView(const std::vector<Triangle>& triangles) : triangles_(triangles) {    
+    setFaceCulling(params.faceCulling);
+    setModelType(params.modelType);
 }

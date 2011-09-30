@@ -8,6 +8,10 @@ bool Geometry::eq(float a, float b) {
     return abs(a - b) < EPS;
 }
 
+int Geometry::cmp(float a, float b) {
+    return a < b - EPS ? -1 : a > b + EPS ? 1 : 0;
+}
+
 float Geometry::det(float a, float b, float c, float d) {
     return a * d - b * c;
 }
@@ -70,6 +74,19 @@ Triangle Geometry::cw_triangle(const Point & a, const Point & b, const Point & c
     return Triangle(a, c, b);
 }
 
+float Geometry::area(float a, float b, float c) {
+    float p = (a+b+c)/2;
+    return sqrt(p * (p-a) * (p-b) * (p-c));
+}
+
+float Geometry::height(float a, float b, float c) {
+    return 2 * area(a, b, c) / a;
+}
+
+bool Geometry::isObtuse(float a, float b, float c) {
+    return cmp(a * a, b * b + c * c) > 0;
+}
+    
 Geometry::Geometry() {
 }
 
