@@ -19,6 +19,7 @@ public:
     
     void setModelType(ViewParams::ModelType modelType);
     void setFaceCulling(bool faceCulling);
+    void setLight();
     
     TopoView(const std::vector<Triangle> & triangles);
     

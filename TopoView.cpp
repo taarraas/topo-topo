@@ -10,6 +10,10 @@ void TopoView::init()
     fprintf(stderr, "GL_VERSION    = %s\n", (char *) glGetString(GL_VERSION));
     fprintf(stderr, "GL_VENDOR     = %s\n", (char *) glGetString(GL_VENDOR));
     fflush(stderr);
+    
+    setFaceCulling(params.faceCulling);
+    setModelType(params.modelType);
+    setLight();
 }
 
 void TopoView::reshape(int width, int height)
@@ -62,7 +66,9 @@ void TopoView::key(unsigned char key, int x, int y)
 
 void TopoView::draw()
 {
-    glClear(GL_COLOR_BUFFER_BIT); 
+    
+    glClear(GL_COLOR_BUFFER_BIT|GL_DEPTH_BUFFER_BIT); 
+   
     glLoadIdentity();     
     glRotatef(cameraState.xrot, 1, 0, 0);
     glRotatef(cameraState.yrot, 0, 1, 0);
@@ -127,7 +133,43 @@ void TopoView::setFaceCulling(bool faceCulling) {
         glDisable(GL_CULL_FACE);
 }
 
-TopoView::TopoView(const std::vector<Triangle>& triangles) : triangles_(triangles) {    
-    setFaceCulling(params.faceCulling);
-    setModelType(params.modelType);
+void TopoView::setLight() {
+    
+    glShadeModel(GL_SMOOTH);
+    	// Enable light and set up 2 light sources (GL_LIGHT0 and GL_LIGHT1)
+	glEnable(GL_LIGHTING);
+	glEnable(GL_LIGHT0);
+	glEnable(GL_LIGHT1);
+
+	// We're setting up two light sources. One of them is located
+	// on the left side of the model (x = -1.5f) and emits white light. The
+	// second light source is located on the right side of the model (x = 1.5f)
+	// emitting red light.
+
+	// GL_LIGHT0: the white light emitting light source
+	// Create light components for GL_LIGHT0
+	float ambientLight0[] = { 0.2f, 0.2f, 0.2f, 1.0f };
+	float diffuseLight0[] = { 0.8f, 0.8f, 0.8f, 1.0f };
+	float specularLight0[] = { 0.5f, 0.5f, 0.5f, 1.0f };
+	float position0[] = { -1.5f, 1.0f, -4.0f, 1.0f };	
+	// Assign created components to GL_LIGHT0
+	glLightfv(GL_LIGHT0, GL_AMBIENT, ambientLight0);
+	glLightfv(GL_LIGHT0, GL_DIFFUSE, diffuseLight0);
+	glLightfv(GL_LIGHT0, GL_SPECULAR, specularLight0);
+	glLightfv(GL_LIGHT0, GL_POSITION, position0);
+
+	// GL_LIGHT1: the red light emitting light source
+	// Create light components for GL_LIGHT1
+	float ambientLight1[] = { 1.0f, 0.5f, 0.5f, 1.0f };
+	float diffuseLight1[] = { 1.0f, 0.5f, 0.5f, 1.0f };
+	float specularLight1[] = { 1.0f, 0.5f, 0.5f, 1.0f };
+	float position1[] = { 1.5f, 1.0f, -4.0f, 1.0f };	
+	// Assign created components to GL_LIGHT1
+	glLightfv(GL_LIGHT1, GL_AMBIENT, ambientLight1);
+	glLightfv(GL_LIGHT1, GL_DIFFUSE, diffuseLight1);
+	glLightfv(GL_LIGHT1, GL_SPECULAR, specularLight1);
+	glLightfv(GL_LIGHT1, GL_POSITION, position1);
+}
+
+TopoView::TopoView(const std::vector<Triangle>& triangles) : triangles_(triangles) {     
 }
