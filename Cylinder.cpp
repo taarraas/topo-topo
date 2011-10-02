@@ -65,8 +65,9 @@ void Cylinder::init(Point a, Point b, float r, int dCount, int lCount) {
         Point rectLU = l1, rectRU = l1 + vup;
         Point rectLD = l2, rectRD = l2 + vdown;
         for (int len = 0; len < lCount; ++len) {
-            triangles_.push_back(Geometry::ccw_triangle(rectLU, rectRD, rectRU, a));
-            triangles_.push_back(Geometry::ccw_triangle(rectLU, rectRD, rectLD, a));
+            triangles_.push_back(Geometry::cw_triangle(rectLU, rectRD, rectRU, a));
+            triangles_.push_back(Geometry::cw_triangle(rectLU, rectRD, rectLD, a));
+            
             rectLU = rectRU;
             rectLD = rectRD;
             rectRU = rectRU + vup;

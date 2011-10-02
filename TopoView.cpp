@@ -1,6 +1,7 @@
 #include "TopoView.h"
 #include "ViewState.h"
 #include "CameraState.h"
+#include "Geometry.h"
 #include <GL/glut.h>
 #include <cstdio>
 
@@ -11,6 +12,10 @@ void TopoView::init()
     fprintf(stderr, "GL_VENDOR     = %s\n", (char *) glGetString(GL_VENDOR));
     fflush(stderr);
     
+    params.faceCulling = true;
+    params.modelType = ViewParams::SOLID;
+    
+    glEnable(GL_DEPTH_TEST);
     setFaceCulling(params.faceCulling);
     setModelType(params.modelType);
     setLight();
@@ -18,7 +23,6 @@ void TopoView::init()
 
 void TopoView::reshape(int width, int height)
 {    
-    std::cout << "reshape" << std::endl;
     glViewport(0, 0, (GLint)width, (GLint)height);
 
     glMatrixMode(GL_PROJECTION);
@@ -67,16 +71,18 @@ void TopoView::key(unsigned char key, int x, int y)
 void TopoView::draw()
 {
     
-    glClear(GL_COLOR_BUFFER_BIT|GL_DEPTH_BUFFER_BIT); 
+    glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT); 
    
     glLoadIdentity();     
     glRotatef(cameraState.xrot, 1, 0, 0);
     glRotatef(cameraState.yrot, 0, 1, 0);
     glTranslatef(-cameraState.pos.x, -cameraState.pos.y, -cameraState.pos.z);        
-
-    glColor3f(1.0f,0.0f,0.0f);         
-    glBegin(GL_TRIANGLES);                          
+    
+    glBegin(GL_TRIANGLES);                              
     BOOST_FOREACH (Triangle t, triangles_) {
+        Point u = Geometry::cross(t[1] - t[0], t[2] - t[0]);
+        u = u / u.abs();
+        glNormal3f(u.x, u.y, u.z);
         for (int v = 0; v < 3; ++v) {
             glVertex3f(t[v].x, t[v].y, t[v].z);
         }
@@ -128,47 +134,21 @@ void TopoView::setModelType(ViewParams::ModelType modelType) {
 
 void TopoView::setFaceCulling(bool faceCulling) {
     if (faceCulling)
-        glEnable(GL_CULL_FACE);
+        glEnable(GL_CULL_FACE);        
     else
         glDisable(GL_CULL_FACE);
 }
 
 void TopoView::setLight() {
-    
-    glShadeModel(GL_SMOOTH);
-    	// Enable light and set up 2 light sources (GL_LIGHT0 and GL_LIGHT1)
-	glEnable(GL_LIGHTING);
-	glEnable(GL_LIGHT0);
-	glEnable(GL_LIGHT1);
+   glClearColor (0.0, 0.0, 0.0, 0.0);
+   glShadeModel (GL_SMOOTH);
 
-	// We're setting up two light sources. One of them is located
-	// on the left side of the model (x = -1.5f) and emits white light. The
-	// second light source is located on the right side of the model (x = 1.5f)
-	// emitting red light.
+   GLfloat light_position[] = { 0.0, 0.0, 0.0, 1.0 };
+   glLightfv(GL_LIGHT0, GL_POSITION, light_position);
 
-	// GL_LIGHT0: the white light emitting light source
-	// Create light components for GL_LIGHT0
-	float ambientLight0[] = { 0.2f, 0.2f, 0.2f, 1.0f };
-	float diffuseLight0[] = { 0.8f, 0.8f, 0.8f, 1.0f };
-	float specularLight0[] = { 0.5f, 0.5f, 0.5f, 1.0f };
-	float position0[] = { -1.5f, 1.0f, -4.0f, 1.0f };	
-	// Assign created components to GL_LIGHT0
-	glLightfv(GL_LIGHT0, GL_AMBIENT, ambientLight0);
-	glLightfv(GL_LIGHT0, GL_DIFFUSE, diffuseLight0);
-	glLightfv(GL_LIGHT0, GL_SPECULAR, specularLight0);
-	glLightfv(GL_LIGHT0, GL_POSITION, position0);
-
-	// GL_LIGHT1: the red light emitting light source
-	// Create light components for GL_LIGHT1
-	float ambientLight1[] = { 1.0f, 0.5f, 0.5f, 1.0f };
-	float diffuseLight1[] = { 1.0f, 0.5f, 0.5f, 1.0f };
-	float specularLight1[] = { 1.0f, 0.5f, 0.5f, 1.0f };
-	float position1[] = { 1.5f, 1.0f, -4.0f, 1.0f };	
-	// Assign created components to GL_LIGHT1
-	glLightfv(GL_LIGHT1, GL_AMBIENT, ambientLight1);
-	glLightfv(GL_LIGHT1, GL_DIFFUSE, diffuseLight1);
-	glLightfv(GL_LIGHT1, GL_SPECULAR, specularLight1);
-	glLightfv(GL_LIGHT1, GL_POSITION, position1);
+   glEnable(GL_LIGHTING);
+   glEnable(GL_LIGHT0);
+   glEnable(GL_DEPTH_TEST);
 }
 
 TopoView::TopoView(const std::vector<Triangle>& triangles) : triangles_(triangles) {     

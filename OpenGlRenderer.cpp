@@ -49,7 +49,7 @@ void OpenGlRenderer::run(ViewPtr view) {
     glutInitWindowPosition(0, 0);
     glutInitWindowSize(800, 600);
 
-    type = GLUT_RGB | GLUT_ALPHA | GLUT_DOUBLE;
+    type = GLUT_RGB | GLUT_ALPHA | GLUT_DOUBLE | GLUT_DEPTH;
     glutInitDisplayMode(type);
 
     glutCreateWindow("OpenGlRenderer");
