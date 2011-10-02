@@ -20,6 +20,8 @@ public:
     bool contain(const Point& point) const;    
 private:
     void init(Point center, float r);
+    
+    static Point spherePoint(float a, float b);
 };
 
 #endif	/* SPHERE_H */
