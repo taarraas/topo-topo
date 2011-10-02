@@ -41,7 +41,8 @@ bool Cylinder::contain(const Point& point) const {
     float b = dist(point, begin_);
     float c = dist(point, end_);
     float a = dist(begin_, end_);
-    return !Geometry::isObtuse(a, b, c) && Geometry::cmp(Geometry::height(a, b, c), radius_) < 0;
+    return !(Geometry::isObtuse(b, a, c) || Geometry::isObtuse(c, a, b)) && 
+             Geometry::cmp(Geometry::height(a, b, c), radius_) < 0;
 }
 
 void Cylinder::init(Point a, Point b, float r, int dCount, int lCount) {
