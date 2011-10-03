@@ -45,7 +45,21 @@ void Sphere::init(Point center, float r) {
 }
 
 void Sphere::remove(ShapePtr shape) {
-    //TODO 
+    for(int i = triangles_.size() - 1; i >= 0; i--) {
+        Triangle& triangle = triangles_[i];
+        bool contain[3];
+        int countContain = 0;
+        for (int j=0; j < 3; j++) {
+            contain[j] = shape->contain(triangle[j]);
+            if (contain[j])
+                countContain++;            
+        }
+        
+        if (countContain == 0)
+            continue;
+        
+        triangles_.erase(triangles_.begin() + i);
+    }
 }
 
 bool Sphere::contain(const Point& point) const {

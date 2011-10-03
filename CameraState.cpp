@@ -20,8 +20,13 @@ CameraState::~CameraState() {
 }
 
 void CameraState::mouseMovement(float dx, float dy) {
-    xrot += dy;
-    yrot += dx;    
+    if (xrot < 270 && xrot > 90) {
+        xrot += dy;    
+        yrot -= dx;                
+    } else {
+        xrot += dy;    
+        yrot += dx;        
+    }
     if (xrot > 360) xrot -= 360;
     if (yrot > 360) yrot -= 360;
     if (xrot < 0) xrot += 360;
@@ -56,7 +61,11 @@ void CameraState::go(float v, float xangle, float yangle) {
     float xangle_rad = Geometry::radian(xangle);
     float yangle_rad = Geometry::radian(yangle);
     
-    pos.x += v * sin(yangle_rad);
-    pos.z -= v * cos(yangle_rad);
+    float sign = 1;
+    if (xrot < 270 && xrot > 90)
+        sign = -1;
+    
+    pos.x += v * sin(yangle_rad) * sign;
+    pos.z -= v * cos(yangle_rad) * sign;
     pos.y -= v * sin(xangle_rad);        
 }
