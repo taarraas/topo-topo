@@ -20,8 +20,10 @@ public:
     static float dot(const Point & a, const Point & b);
     static bool eq(float a, float b);        
     static int cmp(float a, float b);
-    static void findOrthonormal(const Point & a, Point & b, Point & c);    
+    static Point orthonormal(const Point & a, const Point & b, const Point & c);
+    static void makeOrthonormal(const Point & a, Point & b, Point & c);    
     static float radian(float x);
+    static Triangle dir_triangle(const Point & a, const Point & b, const Point & c, const Point & d, int sign);    
     static Triangle ccw_triangle(const Point & a, const Point & b, const Point & c, const Point & d);
     static Triangle cw_triangle(const Point & a, const Point & b, const Point & c, const Point & d);
     static float area(float a, float b, float c);

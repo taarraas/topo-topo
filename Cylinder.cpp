@@ -48,7 +48,7 @@ bool Cylinder::contain(const Point& point) const {
 void Cylinder::init(Point a, Point b, float r, int dCount, int lCount) {
     Point u = (b - a).norm();
     Point v, w;
-    Geometry::findOrthonormal(u, v, w);
+    Geometry::makeOrthonormal(u, v, w);
     
     for (int stripe = 0; stripe < dCount; ++stripe) {
         float beginAngle = 2 * Geometry::PI * stripe / dCount;

@@ -80,9 +80,7 @@ void TopoView::draw()
     
     glBegin(GL_TRIANGLES);                              
     BOOST_FOREACH (Triangle t, triangles_) {
-        Point u = Geometry::cross(t[1] - t[0], t[2] - t[0]);
-        u = u / u.abs();
-        glNormal3f(u.x, u.y, u.z);
+        glNormal3f(t.norm.x, t.norm.y, t.norm.z);
         for (int v = 0; v < 3; ++v) {
             glVertex3f(t[v].x, t[v].y, t[v].z);
         }

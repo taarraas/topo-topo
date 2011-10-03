@@ -12,7 +12,7 @@
 #include "MapParser.h"
 
 ShapePtr SceneFactory::createSphere(const Point& center, float r) {
-    ShapePtr shape = new Sphere(center, r);
+    ShapePtr shape = new Sphere(center, r, 30);
     LOG_INFO << "Created sphere " << center << ", radius = " << r;
     return shape;
 }

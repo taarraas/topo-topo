@@ -63,15 +63,19 @@ struct Point {
 
 struct Triangle {
     Point p[3];
+    Point norm;
+    
     Triangle () { 
         p[0] = Point(); 
         p[1] = Point(); 
         p[2] = Point();
+        norm = Point(0, 0, 1);
     }
-    Triangle(const Point & p0, const Point & p1, const Point & p2) {
+    
+    Triangle(const Point & p0, const Point & p1, const Point & p2, const Point & norm) : norm(norm) {
         p[0] = p0;
         p[1] = p1;
-        p[2] = p2;
+        p[2] = p2;        
     }
     Point& operator [] (int index) {
         return p[index];

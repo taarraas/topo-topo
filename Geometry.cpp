@@ -36,7 +36,11 @@ float Geometry::radian(float x) {
     return x / 180.0 * PI;
 }
 
-void Geometry::findOrthonormal(const Point & a, Point & b, Point & c) {
+Point Geometry::orthonormal(const Point & a, const Point & b, const Point & c) {
+    return cross(b-a, c-a).norm();
+}
+
+void Geometry::makeOrthonormal(const Point & a, Point & b, Point & c) {
     static Point p[4] = 
     { 
        Point(sqrt(2), sqrt(11), sqrt(19)),
@@ -54,24 +58,22 @@ void Geometry::findOrthonormal(const Point & a, Point & b, Point & c) {
     c = cross(a, b).norm();    
 }
 
-Triangle Geometry::ccw_triangle(const Point & a, const Point & b, const Point & c, const Point & d) {    
+Triangle Geometry::dir_triangle(const Point & a, const Point & b, const Point & c, const Point & d, int sign) {    
     float f = a.x * det(b.y, b.z, 1, c.y, c.z, 1, d.y, d.z, 1) -
               a.y * det(b.x, b.z, 1, c.x, c.z, 1, d.x, d.z, 1) +
               a.z * det(b.x, b.y, 1, c.x, c.y, 1, d.x, d.y, 1) -
                 1 * det(b.x, b.y, b.z, c.x, c.y, c.z, d.x, d.y, d.z);
-    if (f > 0)
-        return Triangle(a, b, c);
-    return Triangle(a, c, b);
+    if (f * sign > 0)
+        return Triangle(a, b, c, orthonormal(a, b, c));
+    return Triangle(a, c, b, orthonormal(a, c, b));    
+}
+
+Triangle Geometry::ccw_triangle(const Point & a, const Point & b, const Point & c, const Point & d) {    
+    return dir_triangle(a, b, c, d, 1);
 }
 
 Triangle Geometry::cw_triangle(const Point & a, const Point & b, const Point & c, const Point & d) {    
-    float f = a.x * det(b.y, b.z, 1, c.y, c.z, 1, d.y, d.z, 1) -
-              a.y * det(b.x, b.z, 1, c.x, c.z, 1, d.x, d.z, 1) +
-              a.z * det(b.x, b.y, 1, c.x, c.y, 1, d.x, d.y, 1) -
-                1 * det(b.x, b.y, b.z, c.x, c.y, c.z, d.x, d.y, d.z);
-    if (f < 0)
-        return Triangle(a, b, c);
-    return Triangle(a, c, b);
+    return dir_triangle(a, b, c, d, -1);
 }
 
 float Geometry::area(float a, float b, float c) {

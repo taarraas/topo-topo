@@ -8,10 +8,10 @@
 #include "Sphere.h"
 #include "Geometry.h"
 
-Sphere::Sphere(Point center, float r)
+Sphere::Sphere(Point center, float r, int Count)
     : center_(center)
     , radius_(r) {
-    init(center, r);
+    init(center, r, Count);
 }
 
 void Sphere::getTriangles(std::vector<Triangle>& dst) {
@@ -19,26 +19,23 @@ void Sphere::getTriangles(std::vector<Triangle>& dst) {
 }
 
 Point Sphere::spherePoint(float a, float b) {
-    Point p;    
-    p.x = sin((a) / 180 * Geometry::PI) * sin((b) / 180 * Geometry::PI);
-    p.y = cos((a) / 180 * Geometry::PI) * sin((b) / 180 * Geometry::PI);
-    p.z = cos((b) / 180 * Geometry::PI);
-    return p;
+    return Point(sin(a) * sin(b), cos(a) * sin(b), cos(b));
 }
 
-void Sphere::init(Point center, float r) {
-    int space = 10;
-    for(double b = 0; b <= 180 - space; b+=space) {
-        for(double a = 0; a <= 360 - space; a+=space){
+void Sphere::init(Point center, float r, int Count) {
+    double b_add = Geometry::PI / Count;
+    double a_add = 2 * Geometry::PI / Count;
+    for(int b_seg = 0; b_seg < Count; ++b_seg) {
+        for(int a_seg = 0; a_seg < Count; ++a_seg){
+            double b = b_add * b_seg;
+            double a = a_add * a_seg;
             Triangle add;
             add[0] = center + Sphere::spherePoint(a, b) * r;
-            add[1] = center + Sphere::spherePoint(a + space, b) * r;
-            add[2] = center + Sphere::spherePoint(a, b + space) * r;            
+            add[1] = center + Sphere::spherePoint(a + a_add, b) * r;
+            add[2] = center + Sphere::spherePoint(a, b + b_add) * r;            
             triangles_.push_back(Geometry::cw_triangle(add[0], add[1], add[2], center));
             
-            add[0] = center + Sphere::spherePoint(a + space, b) * r;
-            add[1] = center + Sphere::spherePoint(a, b + space) * r;            
-            add[2] = center + Sphere::spherePoint(a + space, b + space) * r;
+            add[0] = center + Sphere::spherePoint(a + a_add, b + b_add) * r;
             triangles_.push_back(Geometry::cw_triangle(add[0], add[1], add[2], center));            
         }
     }

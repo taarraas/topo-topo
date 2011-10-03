@@ -14,13 +14,12 @@ class Sphere : public Shape {
     Point center_;
     float radius_;
 public:
-    Sphere(Point center, float r);
+    Sphere(Point center, float r, int Count);
     void getTriangles(std::vector<Triangle>& dst);
     void remove(ShapePtr shape);
     bool contain(const Point& point) const;    
 private:
-    void init(Point center, float r);
-    
+    void init(Point center, float r, int Count);    
     static Point spherePoint(float a, float b);
 };
 
