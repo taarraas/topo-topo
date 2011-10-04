@@ -14,6 +14,7 @@
 
 class SceneFactory {
 public:
+    static TriangleStoragePtr createStorage();
     static ShapePtr createSphere(const Point& center, float r);
     static ShapePtr createCylinder(const Point& a, const Point& b, float r);
     static ScenePtr createScene(std::string filename);

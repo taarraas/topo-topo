@@ -8,33 +8,12 @@
 #include "Cylinder.h"
 #include "Geometry.h"
 
-void Cylinder::getTriangles(std::vector<Triangle>& dst) {
-    dst.insert(dst.end(), triangles_.begin(), triangles_.end());
-}
-
-Cylinder::Cylinder(Point a, Point b, float r, int dCount, int lCount) 
-    : begin_(a)
+Cylinder::Cylinder(TriangleStoragePtr storage, Point a, Point b, float r, int dCount, int lCount) 
+    : Shape(storage)
     , end_(b)
-    , radius_(r) {
+    , radius_(r)
+    , begin_(a) {
     init(a, b, r, dCount, lCount);   
-}
-
-void Cylinder::remove(ShapePtr shape) {
-    for(int i = triangles_.size() - 1; i >= 0; i--) {
-        Triangle& triangle = triangles_[i];
-        bool contain[3];
-        int countContain = 0;
-        for (int j=0; j < 3; j++) {
-            contain[j] = shape->contain(triangle[j]);
-            if (contain[j])
-                countContain++;            
-        }
-        
-        if (countContain == 0)
-            continue;
-        
-        triangles_.erase(triangles_.begin() + i);
-    }
 }
 
 bool Cylinder::contain(const Point& point) const {
@@ -66,8 +45,8 @@ void Cylinder::init(Point a, Point b, float r, int dCount, int lCount) {
         Point rectLU = l1, rectRU = l1 + vup;
         Point rectLD = l2, rectRD = l2 + vdown;
         for (int len = 0; len < lCount; ++len) {
-            triangles_.push_back(Geometry::cw_triangle(rectLU, rectRD, rectRU, a));
-            triangles_.push_back(Geometry::cw_triangle(rectLU, rectRD, rectLD, a));
+            storage_->add(Geometry::cw_triangle(rectLU, rectRD, rectRU, a));
+            storage_->add(Geometry::cw_triangle(rectLU, rectRD, rectLD, a));
             
             rectLU = rectRU;
             rectLD = rectRD;

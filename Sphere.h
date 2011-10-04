@@ -10,13 +10,10 @@
 #include "Shape.h"
 
 class Sphere : public Shape {
-    std::vector<Triangle> triangles_;
     Point center_;
     float radius_;
 public:
-    Sphere(Point center, float r, int Count);
-    void getTriangles(std::vector<Triangle>& dst);
-    void remove(ShapePtr shape);
+    Sphere(TriangleStoragePtr storage, Point center, float r, int Count);
     bool contain(const Point& point) const;    
 private:
     void init(Point center, float r, int Count);    

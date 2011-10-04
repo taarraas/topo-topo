@@ -37,7 +37,7 @@ OBJECTFILES= \
 	${OBJECTDIR}/TopoView.o \
 	${OBJECTDIR}/main.o \
 	${OBJECTDIR}/Scene.o \
-	${OBJECTDIR}/Shape.o \
+	${OBJECTDIR}/TriangleStorageImpl.o \
 	${OBJECTDIR}/Cylinder.o \
 	${OBJECTDIR}/OpenGlRenderer.o \
 	${OBJECTDIR}/Object.o \
@@ -90,10 +90,10 @@ ${OBJECTDIR}/Scene.o: Scene.cpp
 	${RM} $@.d
 	$(COMPILE.cc) -O2 -MMD -MP -MF $@.d -o ${OBJECTDIR}/Scene.o Scene.cpp
 
-${OBJECTDIR}/Shape.o: Shape.cpp 
+${OBJECTDIR}/TriangleStorageImpl.o: TriangleStorageImpl.cpp 
 	${MKDIR} -p ${OBJECTDIR}
 	${RM} $@.d
-	$(COMPILE.cc) -O2 -MMD -MP -MF $@.d -o ${OBJECTDIR}/Shape.o Shape.cpp
+	$(COMPILE.cc) -O2 -MMD -MP -MF $@.d -o ${OBJECTDIR}/TriangleStorageImpl.o TriangleStorageImpl.cpp
 
 ${OBJECTDIR}/Cylinder.o: Cylinder.cpp 
 	${MKDIR} -p ${OBJECTDIR}
