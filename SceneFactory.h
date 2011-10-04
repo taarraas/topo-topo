@@ -9,7 +9,6 @@
 #define	SCENEFACTORY_H
 
 #include "Core.h"
-#include "Shape.h"
 #include "Scene.h"
 
 class SceneFactory {

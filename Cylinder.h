@@ -8,7 +8,6 @@
 #ifndef CYLINDER_H
 #define	CYLINDER_H
 #include "Core.h"
-#include "Shape.h"
 
 class Cylinder : public Shape {
     Point begin_;

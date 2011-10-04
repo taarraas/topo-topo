@@ -11,6 +11,7 @@
       <itemPath>MapParser.h</itemPath>
       <itemPath>Object.h</itemPath>
       <itemPath>OpenGlRenderer.h</itemPath>
+      <itemPath>Primitives.h</itemPath>
       <itemPath>Renderer.h</itemPath>
       <itemPath>Scene.h</itemPath>
       <itemPath>SceneFactory.h</itemPath>

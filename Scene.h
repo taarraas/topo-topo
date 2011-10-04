@@ -8,7 +8,6 @@
 #ifndef SCENE_H
 #define	SCENE_H
 #include "Core.h"
-#include "Shape.h"
 
 class Scene : public Object {
 public:

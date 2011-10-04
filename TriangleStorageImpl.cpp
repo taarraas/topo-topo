@@ -5,7 +5,7 @@
  * Created on October 4, 2011, 9:01 AM
  */
 
-#include "Shape.h"
+#include "Core.h"
 #include "TriangleStorageImpl.h"
 
 void SimpleTriangleStorage::getTriangles(std::vector<Triangle>& dst) {
