@@ -8,14 +8,16 @@
 #include "Sphere.h"
 #include "Geometry.h"
 
-Sphere::Sphere(Point center, float r, int Count)
-    : center_(center)
-    , radius_(r) {
+Sphere::Sphere(TriangleStoragePtr storage, Point center, float r, int Count)
+    : Shape(storage)
+    , radius_(r)
+    , center_(center) {
     init(center, r, Count);
 }
 
-void Sphere::getTriangles(std::vector<Triangle>& dst) {
-    dst.insert(dst.end(), triangles_.begin(), triangles_.end());
+Point Sphere::getIntersection(Point a, Point b) {
+    // TODO implement
+    return Point();
 }
 
 Point Sphere::spherePoint(float a, float b) {
@@ -33,29 +35,11 @@ void Sphere::init(Point center, float r, int Count) {
             add[0] = center + Sphere::spherePoint(a, b) * r;
             add[1] = center + Sphere::spherePoint(a + a_add, b) * r;
             add[2] = center + Sphere::spherePoint(a, b + b_add) * r;            
-            triangles_.push_back(Geometry::cw_triangle(add[0], add[1], add[2], center));
+            storage_->add(Geometry::cw_triangle(add[0], add[1], add[2], center));
             
             add[0] = center + Sphere::spherePoint(a + a_add, b + b_add) * r;
-            triangles_.push_back(Geometry::cw_triangle(add[0], add[1], add[2], center));            
+            storage_->add(Geometry::cw_triangle(add[0], add[1], add[2], center));            
         }
-    }
-}
-
-void Sphere::remove(ShapePtr shape) {
-    for(int i = triangles_.size() - 1; i >= 0; i--) {
-        Triangle& triangle = triangles_[i];
-        bool contain[3];
-        int countContain = 0;
-        for (int j=0; j < 3; j++) {
-            contain[j] = shape->contain(triangle[j]);
-            if (contain[j])
-                countContain++;            
-        }
-        
-        if (countContain == 0)
-            continue;
-        
-        triangles_.erase(triangles_.begin() + i);
     }
 }
 

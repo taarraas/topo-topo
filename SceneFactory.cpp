@@ -10,15 +10,22 @@
 #include "Sphere.h"
 #include "Scene.h"
 #include "MapParser.h"
+#include "TriangleStorageImpl.h"
+
+TriangleStoragePtr SceneFactory::createStorage() {
+    return new SimpleTriangleStorage();
+}
 
 ShapePtr SceneFactory::createSphere(const Point& center, float r) {
-    ShapePtr shape = new Sphere(center, r, 30);
+    TriangleStoragePtr storage = createStorage();
+    ShapePtr shape = new Sphere(storage, center, r, 30);
     LOG_INFO << "Created sphere " << center << ", radius = " << r;
     return shape;
 }
 
 ShapePtr SceneFactory::createCylinder(const Point& a, const Point& b, float r) {
-    ShapePtr shape = new Cylinder(a, b, r, 10, 10);
+    TriangleStoragePtr storage = createStorage();
+    ShapePtr shape = new Cylinder(storage, a, b, r, 10, 10);
     LOG_INFO << "Created cylinder " << a << " - " << b << ", radius = " << r;
     return shape;
 }

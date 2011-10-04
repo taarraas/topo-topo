@@ -7,18 +7,16 @@
 
 #ifndef SPHERE_H
 #define	SPHERE_H
-#include "Shape.h"
+#include "Core.h"
 
 class Sphere : public Shape {
-    std::vector<Triangle> triangles_;
     Point center_;
     float radius_;
 public:
-    Sphere(Point center, float r, int Count);
-    void getTriangles(std::vector<Triangle>& dst);
-    void remove(ShapePtr shape);
+    Sphere(TriangleStoragePtr storage, Point center, float r, int Count);
     bool contain(const Point& point) const;    
 private:
+    Point getIntersection(Point a, Point b);
     void init(Point center, float r, int Count);    
     static Point spherePoint(float a, float b);
 };
