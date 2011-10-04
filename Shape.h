@@ -30,6 +30,10 @@ protected:
 public:
     void getTriangles(std::vector<Triangle>& dst) { storage_->getTriangles(dst); };
     void remove(ShapePtr shape) { storage_->remove(shape); };
+    /**
+     * Returns point of intersection segment [a, b] to shape
+     */
+    virtual Point getIntersection(Point a, Point b) = 0;
     virtual bool contain(const Point& point) const = 0;    
 private:
 

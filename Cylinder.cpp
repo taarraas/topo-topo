@@ -16,6 +16,11 @@ Cylinder::Cylinder(TriangleStoragePtr storage, Point a, Point b, float r, int dC
     init(a, b, r, dCount, lCount);   
 }
 
+Point Cylinder::getIntersection(Point a, Point b) {
+    //TODO implement
+    return Point();
+}
+
 bool Cylinder::contain(const Point& point) const {
     float b = dist(point, begin_);
     float c = dist(point, end_);

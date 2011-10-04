@@ -16,6 +16,7 @@ public:
     Sphere(TriangleStoragePtr storage, Point center, float r, int Count);
     bool contain(const Point& point) const;    
 private:
+    Point getIntersection(Point a, Point b);
     void init(Point center, float r, int Count);    
     static Point spherePoint(float a, float b);
 };

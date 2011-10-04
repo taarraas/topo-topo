@@ -15,6 +15,11 @@ Sphere::Sphere(TriangleStoragePtr storage, Point center, float r, int Count)
     init(center, r, Count);
 }
 
+Point Sphere::getIntersection(Point a, Point b) {
+    // TODO implement
+    return Point();
+}
+
 Point Sphere::spherePoint(float a, float b) {
     return Point(sin(a) * sin(b), cos(a) * sin(b), cos(b));
 }
