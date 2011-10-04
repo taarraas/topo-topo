@@ -57,8 +57,11 @@ void TopoView::key(unsigned char key, int x, int y)
         
         setModelType(params.modelType);    
         break;
+    case 'n':
+        params.showNormals = !params.showNormals;
+        break;
     case 'c':
-        params.faceCulling = !params.faceCulling;
+        params.faceCulling = !params.faceCulling;        
         setFaceCulling(params.faceCulling);
         break;      
     default:
@@ -77,9 +80,24 @@ void TopoView::draw()
     glRotatef(cameraState.xrot, 1, 0, 0);
     glRotatef(cameraState.yrot, 0, 1, 0);
     glTranslatef(-cameraState.pos.x, -cameraState.pos.y, -cameraState.pos.z);        
+
+    if (params.showNormals) {
+        float light_ambient1[] = { 0.0, 1.0, 0.0, 1.0 };
+        glLightfv(GL_LIGHT0, GL_AMBIENT, light_ambient1);
+        glBegin(GL_LINES);
+        BOOST_FOREACH (const Triangle & t, triangles_) {
+            for (int v = 0; v < 3; ++v) {
+                glVertex3f(t[v].x, t[v].y, t[v].z);
+                glVertex3f(t[v].x + 0.05*t.norm.x, t[v].y + 0.05*t.norm.y, t[v].z + 0.05*t.norm.z);
+            }
+        }
+        glEnd();
+    }
     
+    float light_ambient2[] = { 1.0, 1.0, 1.0, 1.0 };
+    glLightfv(GL_LIGHT0, GL_AMBIENT, light_ambient2);
     glBegin(GL_TRIANGLES);                              
-    BOOST_FOREACH (Triangle t, triangles_) {
+    BOOST_FOREACH (const Triangle & t, triangles_) {
         glNormal3f(t.norm.x, t.norm.y, t.norm.z);
         for (int v = 0; v < 3; ++v) {
             glVertex3f(t[v].x, t[v].y, t[v].z);
@@ -141,8 +159,17 @@ void TopoView::setLight() {
    glClearColor (0.0, 0.0, 0.0, 0.0);
    glShadeModel (GL_SMOOTH);
 
-   GLfloat light_position[] = { 0.0, 0.0, 0.0, 1.0 };
-   glLightfv(GL_LIGHT0, GL_POSITION, light_position);
+   GLfloat mat_specular[] = { 1.0, 1.0, 1.0, 1.0 };
+   GLfloat mat_shininess[] = { 100.0 };
+   glMaterialfv(GL_FRONT, GL_SPECULAR, mat_specular);
+   glMaterialfv(GL_FRONT, GL_SHININESS, mat_shininess);
+  
+   float light_diffuse[] = { 0.6, 0.6, 0.6, 1.0 };
+   float light_specular[] = { 1.0, 1.0, 1.0, 1.0 };   
+   GLfloat light_position[] = { 0.0, 0.0, 0.0, 1.0 };        
+   glLightfv(GL_LIGHT0, GL_DIFFUSE, light_diffuse);
+   glLightfv(GL_LIGHT0, GL_SPECULAR, light_specular);        
+   glLightfv(GL_LIGHT0, GL_POSITION, light_position); 
 
    glEnable(GL_LIGHTING);
    glEnable(GL_LIGHT0);

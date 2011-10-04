@@ -20,6 +20,7 @@ public:
     
     ModelType modelType;
     bool faceCulling;
+    bool showNormals;
 };
 
 #endif	/* VIEWPARAMS_H */

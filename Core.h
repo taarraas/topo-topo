@@ -77,6 +77,11 @@ struct Triangle {
         p[1] = p1;
         p[2] = p2;        
     }
+    
+    const Point& operator [] (int index) const {
+        return p[index];
+    }
+    
     Point& operator [] (int index) {
         return p[index];
     }
