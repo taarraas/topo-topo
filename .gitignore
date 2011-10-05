@@ -1,8 +1,12 @@
-/build/Debug/
-/dist/Debug/
-/nbproject/private/
 *.[oa]
 *~
 .dep.inc
-/build/Release/
-/build/bin/
+/CMakeFiles/
+/bin/
+/build/
+/dist/Debug/
+/nbproject/private/
+CMakeCache.txt
+Makefile
+cmake_install.cmake
+install_manifest.txt
