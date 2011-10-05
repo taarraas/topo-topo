@@ -12,6 +12,8 @@
 
 class SimpleTriangleStorage : public TriangleStorage {
     std::vector<Triangle> triangles_;
+    static void addTriangles(ShapePtr shape, const std::vector<Point>& in, const std::vector<Point>& out, std::vector<Triangle>& dst, const Triangle& original);
+    static void sortBySameOrder(std::vector<Point>& sorted, const Triangle& order);
 public:
     void getTriangles(std::vector<Triangle>& dst);
     void add(const Triangle& tr);

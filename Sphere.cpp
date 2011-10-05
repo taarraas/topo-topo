@@ -16,7 +16,9 @@ Sphere::Sphere(TriangleStoragePtr storage, Point center, float r, int Count)
 }
 
 Point Sphere::getIntersection(Point a, Point b) {
-    // TODO implement
+    if ((contain(a) && contain(b)) || (!contain(a) && !contain(b))) {
+        throw Exception("Sphere::getIntersection : External data inconsistency : given segment(!) doesn't intersect sphere");
+    }
     return Point();
 }
 
@@ -44,5 +46,5 @@ void Sphere::init(Point center, float r, int Count) {
 }
 
 bool Sphere::contain(const Point& point) const {
-    return (point-center_).abs() < radius_;
+    return Geometry::cmp(dist(point, center_), radius_) < 0;
 }

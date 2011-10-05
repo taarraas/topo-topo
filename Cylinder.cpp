@@ -17,7 +17,9 @@ Cylinder::Cylinder(TriangleStoragePtr storage, Point a, Point b, float r, int dC
 }
 
 Point Cylinder::getIntersection(Point a, Point b) {
-    //TODO implement
+    if ((contain(a) && contain(b)) || (!contain(a) && !contain(b))) {
+        throw Exception("Sphere::getIntersection : External data inconsistency : given segment(!) doesn't intersect sphere");
+    }
     return Point();
 }
 

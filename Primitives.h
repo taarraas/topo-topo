@@ -68,6 +68,10 @@ struct Triangle {
     Point& operator [] (int index) {
         return p[index];
     }
+    
+    const Point& operator [] (int index) const {
+        return p[index];
+    }
 };
 
 #endif	/* PRIMITIVES_H */

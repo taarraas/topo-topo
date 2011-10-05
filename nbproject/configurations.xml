@@ -11,12 +11,14 @@
       <itemPath>MapParser.h</itemPath>
       <itemPath>Object.h</itemPath>
       <itemPath>OpenGlRenderer.h</itemPath>
+      <itemPath>Primitives.h</itemPath>
       <itemPath>Renderer.h</itemPath>
       <itemPath>Scene.h</itemPath>
       <itemPath>SceneFactory.h</itemPath>
       <itemPath>Shape.h</itemPath>
       <itemPath>Sphere.h</itemPath>
       <itemPath>TopoView.h</itemPath>
+      <itemPath>TriangleStorageImpl.h</itemPath>
       <itemPath>View.h</itemPath>
       <itemPath>ViewParams.h</itemPath>
       <itemPath>ViewState.h</itemPath>
@@ -37,9 +39,9 @@
       <itemPath>OpenGlRenderer.cpp</itemPath>
       <itemPath>Scene.cpp</itemPath>
       <itemPath>SceneFactory.cpp</itemPath>
-      <itemPath>Shape.cpp</itemPath>
       <itemPath>Sphere.cpp</itemPath>
       <itemPath>TopoView.cpp</itemPath>
+      <itemPath>TriangleStorageImpl.cpp</itemPath>
       <itemPath>View.cpp</itemPath>
       <itemPath>ViewParams.cpp</itemPath>
       <itemPath>ViewState.cpp</itemPath>
