@@ -17,8 +17,24 @@
 /*
  * 
  */
+
+#include "Cylinder.h"
+#include "TriangleStorageImpl.h"
+void testCylinder() {
+    TriangleStoragePtr storage = new SimpleTriangleStorage();
+    Point a = Point(0, 0, 0);	
+    Point b = Point(0, 10, 0);	
+    float r = 2;
+    ShapePtr shape = new Cylinder(storage, a, b, r, 10, 10);
+    Point q = Point(2, 2, 2);
+    Point w = Point(0, 2, 1);
+    LOG_INFO << shape->getIntersection(q, w) << std::endl;
+}
+
 int main(int argc, char** argv) {
     try {
+		// testCylinder();
+		// return 0;
         ScenePtr scene = SceneFactory::createScene("sample.map");
         std::vector<Triangle> triangles;
         scene->getTriangles(triangles);

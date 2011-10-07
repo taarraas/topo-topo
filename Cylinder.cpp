@@ -20,13 +20,38 @@ Point Cylinder::getIntersection(Point a, Point b) {
     if ((contain(a) && contain(b)) || (!contain(a) && !contain(b))) {
         throw Exception("Sphere::getIntersection : External data inconsistency : given segment(!) doesn't intersect sphere");
     }
-    return Point();
+    Point norm = (end_ - begin_).norm();
+    float w = Geometry::height(a, begin_, end_);
+    float e = Geometry::height(b, begin_, end_);
+    float q_proj = Geometry::dot(a, norm) - Geometry::dot(b, norm);
+    float q_hypo = Geometry::dist(a, b);
+    float q = Geometry::Sqrt(q_hypo*q_hypo - q_proj*q_proj);
+
+    if (w > e) {
+	std::swap(w, e);
+	std::swap(a, b);
+    }
+    
+    float h = Geometry::height(q, w, e);    
+    float x;
+    if (Geometry::isObtuse(e, q, w)) {
+	x = Geometry::Sqrt(radius_*radius_ - h*h) - Geometry::Sqrt(w*w - h*h);
+    } else {
+	x = Geometry::Sqrt(w*w - h*h) + Geometry::Sqrt(radius_*radius_ - h*h);
+    }
+    if (Geometry::cmp(h, 0) == 0)
+	x = radius_-w;
+    Point p = a + (b-a) * (x/q);
+    //    LOG_INFO << q << ' ' << w << ' ' << e;
+    //    LOG_INFO << h;
+    //    LOG_INFO << Geometry::height(p, begin_, end_) << ' ' << radius_;
+    return p;
 }
 
 bool Cylinder::contain(const Point& point) const {
-    float b = dist(point, begin_);
-    float c = dist(point, end_);
-    float a = dist(begin_, end_);
+    float b = Geometry::dist(point, begin_);
+    float c = Geometry::dist(point, end_);
+    float a = Geometry::dist(begin_, end_);
     return !(Geometry::isObtuse(b, a, c) || Geometry::isObtuse(c, a, b)) && 
              Geometry::cmp(Geometry::height(a, b, c), radius_) < 0;
 }

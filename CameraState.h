@@ -24,7 +24,7 @@ public:
     virtual void goRight(float v);
     
     Point pos;
-    double xrot, yrot;
+    float xrot, yrot;
 private:
 };
 

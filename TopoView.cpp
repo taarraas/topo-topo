@@ -110,11 +110,11 @@ void TopoView::draw()
 
 void TopoView::idle()
 {
-    double t = glutGet(GLUT_ELAPSED_TIME) / 1000.;
-    static double t0 = -1.0;
+    float t = glutGet(GLUT_ELAPSED_TIME) / 1000.;
+    static float t0 = -1.0;
     if (t0 < 0.)
 	t0 = t;
-    double dt = t - t0;
+    float dt = t - t0;
     t0 = t;
     glutPostRedisplay();
 }

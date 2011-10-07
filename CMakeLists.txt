@@ -2,7 +2,7 @@ cmake_minimum_required (VERSION 2.6)
 project (topo-topo)
 
 #set(CMAKE_MODULE_PATH "cmake/modules/" ${CMAKE_MODULE_PATH})
-set(CMAKE_INSTALL_PREFIX Debug)
+#set(CMAKE_INSTALL_PREFIX Debug)
 #set(CMAKE_LIBRARY_OUTPUT_DIRECTORY "output")
 set(CMAKE_INSTALL_PREFIX "bin/")
 
