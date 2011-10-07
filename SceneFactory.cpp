@@ -39,7 +39,7 @@ ScenePtr SceneFactory::createScene(std::string filename) {
     while (parser.next(el)) {
         scene->add(createCylinder(el.from, el.to, r));
         
-	/*        if (alreadyAddedPoints.find(el.from) != alreadyAddedPoints.end())
+	if (alreadyAddedPoints.find(el.from) != alreadyAddedPoints.end())
             scene->add(createSphere(el.from, r));
         else
             alreadyAddedPoints.insert(el.from);
@@ -47,9 +47,7 @@ ScenePtr SceneFactory::createScene(std::string filename) {
         if (alreadyAddedPoints.find(el.to) != alreadyAddedPoints.end())
             scene->add(createSphere(el.to, r));
         else
-	alreadyAddedPoints.insert(el.to);*/
-        
-        
+	    alreadyAddedPoints.insert(el.to);      
     }
     return scene;    
 }
