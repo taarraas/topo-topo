@@ -32,6 +32,7 @@ public:
     static float height(float a, float b, float c);
     static float height(const Point& a, const Point& b, const Point& c);
     static bool isObtuse(float a, float b, float c);    
+    static bool isObtuse(const Point& a, const Point& b, const Point& c);    
     static std::vector<float> quadraticEquation(float a, float b, float c);
     virtual ~Geometry();
 private:

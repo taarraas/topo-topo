@@ -12,55 +12,42 @@ void SimpleTriangleStorage::getTriangles(std::vector<Triangle>& dst) {
     dst.insert(dst.end(), triangles_.begin(), triangles_.end());
 }
 
-void SimpleTriangleStorage::sortBySameOrder(std::vector<Point>& sorted, const Triangle& order) {
-}
-
-void SimpleTriangleStorage::addTriangles(ShapePtr shape, const std::vector<Point>& in, const std::vector<Point>& out, std::vector<Triangle>& dst, const Triangle& original) {
-    std::vector<Point> edge;
-    BOOST_FOREACH(const Point& inP, in) {
-        BOOST_FOREACH(const Point& outP, out) {
-            Point edgePoint = shape->getIntersection(inP, outP);
-            edge.push_back(edgePoint);
-        }
-    }
-
-    std::vector<Point> hull;
-    hull.insert(hull.end(), out.begin(), out.end());
-    hull.insert(hull.end(), edge.begin(), edge.end());
-    
-    if (hull.size() < 3)
-        throw Exception("SimpleTriangleStorage::addTriangles : Data inconsistency : hull size = " + hull.size());
-    sortBySameOrder(hull, original);
-    for(size_t i = 1; i < hull.size() - 1; i++) {
-        Triangle tr(hull[0], hull[i], hull[i + 1], original.norm);
-        dst.push_back(tr);
-    }
-}
-
 void SimpleTriangleStorage::remove(ShapePtr shape) {
     std::vector<Triangle> newTriangles;
     for(int i = triangles_.size() - 1; i >= 0; i--) {
         Triangle& triangle = triangles_[i];
         
-        std::vector<Point> in, out;
+        std::vector<int> in;
         for (int j = 0; j < 3; j++) {
             if (shape->contain(triangle[j]))
-                in.push_back(triangle[j]);
-            else
-                out.push_back(triangle[j]);
+                in.push_back(j);
         }
-        
-        if (in.size() == 0)
-            continue;
-        
-        Triangle originalTriangle = triangles_[i];
-        
-        triangles_.erase(triangles_.begin() + i);
-        
-        if (in.size() == 3)
-            continue;
-        
-        addTriangles(shape, in, out, newTriangles, originalTriangle);
+	triangles_.erase(triangles_.begin() + i);
+	if (in.size() == 3) continue;
+	if (in.size() == 1) {
+	    std::cout << "case1" << std::endl;
+	    Point q = shape->getIntersection(triangle[in[0]], triangle[(in[0] + 1) % 3]);
+	    Point w = shape->getIntersection(triangle[in[0]], triangle[(in[0] + 2) % 3]);
+
+	    newTriangles.push_back(Triangle(q, 
+					    triangle[(in[0] + 1) % 3], 
+					    triangle[(in[0] + 2) % 3],
+					    triangle.norm));
+
+	    newTriangles.push_back(Triangle(triangle[(in[0] + 2) % 3], 
+					    w, 
+					    q,
+					    triangle.norm));
+	} else {
+	    std::cout << "case2" << std::endl;
+	    if (in[0] == 0 && in[1] == 2) std::swap(in[0], in[1]);
+	    int out = (in[1] + 1) % 3;
+	    Point q = shape->getIntersection(triangle[out], triangle[in[0]]);
+	    Point w = shape->getIntersection(triangle[out], triangle[in[1]]);
+	    newTriangles.push_back(Triangle(triangle[out], q, w, triangle.norm));
+	    std::cout << "~case2" << std::endl;
+	}   
+	
     }
     triangles_.insert(triangles_.end(), newTriangles.begin(), newTriangles.end());    
 }

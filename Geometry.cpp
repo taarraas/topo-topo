@@ -89,7 +89,6 @@ float Geometry::height(float a, float b, float c) {
     return 2 * area(a, b, c) / a;
 }
 
-#include "Core.h"
 float Geometry::height(const Point& a, const Point& b, const Point& c) {
     float A = dist(b, c);
     float B = dist(a, c);
@@ -99,6 +98,13 @@ float Geometry::height(const Point& a, const Point& b, const Point& c) {
 
 bool Geometry::isObtuse(float a, float b, float c) {
     return cmp(a * a, b * b + c * c) > 0;
+}
+
+bool Geometry::isObtuse(const Point& a, const Point& b, const Point& c) {
+    float q = dist(b, c);
+    float w = dist(a, c);
+    float e = dist(a, b);
+    return isObtuse(q, w, e);
 }
 
 std::vector<float> Geometry::quadraticEquation(float a, float b, float c) {
@@ -113,7 +119,6 @@ std::vector<float> Geometry::quadraticEquation(float a, float b, float c) {
 }
 
 float Geometry::Sqrt(float x) {
-    //    if (x < -EPS) throw Exception("Geometry::Sqrt : x < -EPS");
     if (x < 0) x = 0;
     return sqrt(x);
 }

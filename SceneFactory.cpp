@@ -35,11 +35,10 @@ ScenePtr SceneFactory::createScene(std::string filename) {
     ScenePtr scene = new Scene();
     MapParser parser(filename);
     MapParser::MapElement el;
-    std::set<Point> alreadyAddedPoints;
+    std::set<Point> alreadyAddedPoints;    
     while (parser.next(el)) {
-        scene->add(createCylinder(el.from, el.to, r));
-        
-	if (alreadyAddedPoints.find(el.from) != alreadyAddedPoints.end())
+	scene->add(createCylinder(el.from, el.to, r));	
+	/*	if (alreadyAddedPoints.find(el.from) != alreadyAddedPoints.end())
             scene->add(createSphere(el.from, r));
         else
             alreadyAddedPoints.insert(el.from);
@@ -47,7 +46,7 @@ ScenePtr SceneFactory::createScene(std::string filename) {
         if (alreadyAddedPoints.find(el.to) != alreadyAddedPoints.end())
             scene->add(createSphere(el.to, r));
         else
-	    alreadyAddedPoints.insert(el.to);      
+	alreadyAddedPoints.insert(el.to);      */
     }
     return scene;    
 }
