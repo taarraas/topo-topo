@@ -18,7 +18,7 @@ Cylinder::Cylinder(TriangleStoragePtr storage, Point a, Point b, float r, int dC
 
 Point Cylinder::getIntersection(Point a, Point b) {
     if ((contain(a) && contain(b)) || (!contain(a) && !contain(b))) {
-        throw Exception("Sphere::getIntersection : External data inconsistency : given segment(!) doesn't intersect sphere");
+	throw Exception("Sphere::getIntersection : External data inconsistency : given segment(!) doesn't intersect sphere");
     }
     if (!contain(a))
 	std::swap(a, b);
@@ -29,16 +29,6 @@ Point Cylinder::getIntersection(Point a, Point b) {
     float q_hypo = Geometry::dist(a, b);
     float q = Geometry::Sqrt(q_hypo*q_hypo - q_proj*q_proj);
     
-    if (e < radius_) {	
-	Point which;
-	if (Geometry::isObtuse(begin_, b, end_))
-	    which = begin_;
-	else
-	    which = end_;
-	float v = Geometry::dot(a-which, norm) / Geometry::dot(norm, a-b);	
-	Point p = a + (b-a) * v + which;
-	return p;
-    }
     float h = Geometry::height(q, w, e);    
     float x;
     if (Geometry::isObtuse(e, q, w)) {
@@ -49,7 +39,18 @@ Point Cylinder::getIntersection(Point a, Point b) {
     if (Geometry::cmp(h, 0) == 0)
 	x = radius_-w;
     Point p = a + (b-a) * (x/q);
+
+    if (Geometry::cmp(x, 0) < 0 || Geometry::cmp(x, q) > 0 || !onBound(p))
+	return a;
     return p;
+}
+
+bool Cylinder::onBound(const Point& point) const {
+    float b = Geometry::dist(point, begin_);
+    float c = Geometry::dist(point, end_);
+    float a = Geometry::dist(begin_, end_);
+    return !(Geometry::isObtuse(b, a, c) || Geometry::isObtuse(c, a, b)) && 
+             Geometry::cmp(Geometry::height(a, b, c), radius_) == 0;    
 }
 
 bool Cylinder::contain(const Point& point) const {
@@ -57,7 +58,7 @@ bool Cylinder::contain(const Point& point) const {
     float c = Geometry::dist(point, end_);
     float a = Geometry::dist(begin_, end_);
     return !(Geometry::isObtuse(b, a, c) || Geometry::isObtuse(c, a, b)) && 
-             Geometry::cmp(Geometry::height(a, b, c), radius_) < 0;
+             Geometry::cmp(Geometry::height(a, b, c), radius_) <= 0;
 }
 
 void Cylinder::init(Point a, Point b, float r, int dCount, int lCount) {

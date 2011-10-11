@@ -3,13 +3,14 @@
 
 const float Geometry::PI;
 const float Geometry::EPS;
+const float Geometry::EPS2;
 
 bool Geometry::eq(float a, float b) {
     return abs(a - b) < EPS;
 }
 
-int Geometry::cmp(float a, float b) {
-    return a < b - EPS ? -1 : a > b + EPS ? 1 : 0;
+int Geometry::cmp(float a, float b, float eps) {
+    return a < b - eps ? -1 : a > b + eps ? 1 : 0;
 }
 
 float Geometry::det(float a, float b, float c, float d) {

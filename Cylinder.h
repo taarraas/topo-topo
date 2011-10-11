@@ -16,6 +16,7 @@ class Cylinder : public Shape {
 public:
     Cylinder(TriangleStoragePtr storage, Point a, Point b, float r, int dCount, int lCount);
     bool contain(const Point& point) const;
+    bool onBound(const Point& point) const;
     Point getIntersection(Point a, Point b);
 private:
     void init(Point a, Point b, float r, int dCount, int lCount);

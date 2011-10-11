@@ -7,6 +7,7 @@
 
 #include "Sphere.h"
 #include "Geometry.h"
+#include <cstdio>
 
 Sphere::Sphere(TriangleStoragePtr storage, Point center, float r, int Count)
     : Shape(storage)
@@ -17,22 +18,21 @@ Sphere::Sphere(TriangleStoragePtr storage, Point center, float r, int Count)
 
 Point Sphere::getIntersection(Point a, Point b) {
     if ((contain(a) && contain(b)) || (!contain(a) && !contain(b))) {
-        throw Exception("Sphere::getIntersection : External data inconsistency : given segment(!) doesn't intersect sphere");
+	throw Exception("Sphere::getIntersection : External data inconsistency : given segment(!) doesn't intersect sphere");
     }
     Point delta = b-a;
     a = a - center_;
+
     std::vector<float> t = Geometry::quadraticEquation(
 						       delta.x * delta.x + delta.y * delta.y + delta.z * delta.z,
 						       2 * (delta.x * a.x + delta.y * a.y + delta.z * a.z),
 						       a.x * a.x + a.y * a.y + a.z * a.z - radius_ * radius_);
-
     BOOST_FOREACH(float x, t) {
 	if (Geometry::cmp(x, 0) < 0 || Geometry::cmp(x, 1) > 0) continue;	
-	Point tupitupi = b - delta * x;
-	std::cout << Geometry::dist(tupitupi, center_) << ' ' << radius_ << std::endl;
+	Point pp = b - delta * (1-x);
+	return pp;
     }    
-    throw Exception("Sphere::getIntersection : External data inconsistency : given segment(!) doesn't intersect sphere");    
-    //return Point();
+    throw Exception("Sphere::getIntersection : External data inconsistency : no solution satisfies");    
 }
 
 Point Sphere::spherePoint(float a, float b) {

@@ -12,7 +12,8 @@
 
 class Geometry {
 public:    
-    static const float EPS = 1e-9;
+    static const float EPS = 1e-6;
+    static const float EPS2 = 1e-5;
     static const float PI = M_PI;
     static Point cross(const Point & a, const Point & b);
     static float Sqrt(float x);
@@ -21,7 +22,7 @@ public:
     static float dist(const Point& q, const Point& w);
     static float dot(const Point & a, const Point & b);
     static bool eq(float a, float b);        
-    static int cmp(float a, float b);
+    static int cmp(float a, float b, float eps = EPS);
     static Point orthonormal(const Point & a, const Point & b, const Point & c);
     static void makeOrthonormal(const Point & a, Point & b, Point & c);    
     static float radian(float x);
