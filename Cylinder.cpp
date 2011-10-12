@@ -28,7 +28,9 @@ Point Cylinder::getIntersection(Point a, Point b) {
     float q_proj = Geometry::dot(a, norm) - Geometry::dot(b, norm);
     float q_hypo = Geometry::dist(a, b);
     float q = Geometry::Sqrt(q_hypo*q_hypo - q_proj*q_proj);
-    
+    if (Geometry::cmp(q, 0) == 0)
+	return a;
+
     float h = Geometry::height(q, w, e);    
     float x;
     if (Geometry::isObtuse(e, q, w)) {
@@ -39,7 +41,6 @@ Point Cylinder::getIntersection(Point a, Point b) {
     if (Geometry::cmp(h, 0) == 0)
 	x = radius_-w;
     Point p = a + (b-a) * (x/q);
-
     if (Geometry::cmp(x, 0) < 0 || Geometry::cmp(x, q) > 0 || !onBound(p))
 	return a;
     return p;
